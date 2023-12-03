@@ -4,6 +4,7 @@ import edu.macalester.graphics.CanvasWindow;
 
 public class PokemonCardsGame {
     private CanvasWindow canvas;
+
     public static void main(String[] args) {
         PokemonCardsGame game = new PokemonCardsGame();
         game.addPokemonCard(); 
@@ -21,7 +22,7 @@ public class PokemonCardsGame {
         double cardY = 100;
 
         PokemonCard pokemonCard = new PokemonCard(cardX, cardY);
-        pokemonCard.makePokemonCard(); // Customize the Pokemon card appearance
+        pokemonCard.makePokemonCard("starly"); // Customize the Pokemon card appearance
 
         pokemonCard.addToCanvas(canvas);
     }

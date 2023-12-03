@@ -8,7 +8,6 @@ import edu.macalester.graphics.Rectangle;
 public class PokemonCard {
     private final double CARD_WIDTH = 120;
     private final double CARD_HEIGHT = 180;
-    // private final double POKEMON_SIZE;
 
     private GraphicsGroup group;
     private double centerX;
@@ -31,8 +30,8 @@ public class PokemonCard {
         group.add(pokemon);
     }
 
-    public void makePokemonCard(){
-        pokemon.setImagePath("pokemon_images/starly.png");
+    public void makePokemonCard(String name){
+        pokemon.setImagePath("pokemon_images/" + name + ".png");
         updatePokemonPosition();
     }
 
