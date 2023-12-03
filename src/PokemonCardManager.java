@@ -3,6 +3,7 @@ import edu.macalester.graphics.GraphicsGroup;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,6 +45,15 @@ public class PokemonCardManager {
             pokemonImages.add(imagePath);
         }
     
+        return pokemonImages;
+    }
+
+    private List<String> pokemonImageStrings(File[] files) {
+        List<String> pokemonImages = new ArrayList<>();
+        for (File imageFile: files) {
+            String imageFileName = imageFile.getAbsolutePath();
+            pokemonImages.add(imageFileName);
+        }
         return pokemonImages;
     }
 
