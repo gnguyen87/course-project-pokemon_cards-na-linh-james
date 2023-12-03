@@ -27,16 +27,12 @@ public class PokemonCard {
         
         this.cardShape = new Rectangle(this.centerX, this.centerY, CARD_WIDTH, CARD_HEIGHT);
         group.add(cardShape);
-
-        pokemon = new Image(this.centerX + CARD_WIDTH/2, this.centerY + CARD_HEIGHT/2);
-        pokemon.setMaxWidth(CARD_WIDTH*0.85);
-        pokemon.setMaxHeight(CARD_HEIGHT*0.85);
-        group.add(pokemon);
-
-
     }
 
     public void makePokemonCard(String name){
+        pokemon = new Image(this.centerX + CARD_WIDTH/2, this.centerY + CARD_HEIGHT/2);
+        pokemon.setMaxWidth(CARD_WIDTH*0.85);
+        pokemon.setMaxHeight(CARD_HEIGHT*0.85);
         pokemon.setImagePath("pokemon_images/" + name + ".png");
         updatePokemonPosition();
     }
@@ -60,8 +56,6 @@ public class PokemonCard {
         }
     }
 
-
-
     private void updatePokemonPosition() {
         pokemon.setCenter(centerX + CARD_WIDTH/2, centerY + CARD_HEIGHT/2);
     }
@@ -74,7 +68,5 @@ public class PokemonCard {
     public void removeFromCanvas(CanvasWindow canvas) {
         canvas.remove(group);
     }
-
-
-    
+ 
 }
