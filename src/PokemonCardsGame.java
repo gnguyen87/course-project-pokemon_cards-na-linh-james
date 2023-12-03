@@ -13,7 +13,7 @@ public class PokemonCardsGame {
 
     public PokemonCardsGame() {
         canvas = new CanvasWindow("Pokemon Card Puzzle", 1200, 900);
-        
+       
     }
 
     public void addPokemonCard() {
@@ -21,9 +21,11 @@ public class PokemonCardsGame {
         double cardX = 100;
         double cardY = 100;
 
-        PokemonCard pokemonCard = new PokemonCard(cardX, cardY);
+        PokemonCard pokemonCard = new PokemonCard(cardX, cardY, false);
         pokemonCard.makePokemonCard("starly"); // Customize the Pokemon card appearance
 
         pokemonCard.addToCanvas(canvas);
+        canvas.onClick(event -> pokemonCard.cardClicked(event.getPosition()));
+        
     }
 }
