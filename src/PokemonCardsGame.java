@@ -22,7 +22,9 @@ public class PokemonCardsGame {
         double cardY = 100;
 
         PokemonCard pokemonCard = new PokemonCard(cardX, cardY, false);
-        pokemonCard.makePokemonCard("starly"); // Customize the Pokemon card appearance
+        pokemonCard.makePokemonCard("starly"); 
+        
+        
 
         pokemonCard.addToCanvas(canvas);
         canvas.onClick(event -> pokemonCard.cardClicked(event.getPosition()));
