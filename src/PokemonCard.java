@@ -8,8 +8,8 @@ import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 
 public class PokemonCard {
-    private final double CARD_WIDTH = 120;
-    private final double CARD_HEIGHT = 180;
+    public final double CARD_WIDTH = 120;
+    public final double CARD_HEIGHT = 180;
 
     private GraphicsGroup group;
     private double centerX;
@@ -68,5 +68,11 @@ public class PokemonCard {
     public void removeFromCanvas(CanvasWindow canvas) {
         canvas.remove(group);
     }
+
+    public GraphicsGroup getGroup(){
+        return group;
+    }
+
+    
  
 }

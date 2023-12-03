@@ -11,42 +11,44 @@ import java.util.List;
 public class PokemonCardManager {
 
     private List<PokemonCard> cards;
-    private GraphicsGroup cardGroup;
+    public GraphicsGroup cardGroup;
+    private final double DISTANCE = 20;
 
     public PokemonCardManager() {
         this.cards = new ArrayList<>();
         this.cardGroup = new GraphicsGroup();
     }
 
-    public void cardGenerator(CanvasWindow canvas, int rows, int columns) {
-        List<String> pokemonImages = generatePokemonImages();
 
-        // for (int i = 0; i < rows * columns; i++) {
-        //     PokemonCard card = new PokemonCard(i, i, false);
-        //     card.setPokemonImage(pokemonImages.get(i % (pokemonImages.size())));
-        //     card.addToCanvas(cardGroup);
-        //     cards.add(card);
-        // }
+
+
+    public void cardGenerator(CanvasWindow canvas, int rows, int columns) {
+        File files = new File("res/pokemon_images");
+    
+        List<String> pokemonImages = pokemonImageStrings(files.listFiles());
+
+        double centerX = 0;
+        double centerY = 0;
+
+        for (String poke_name : pokemonImages){
+            PokemonCard card = new PokemonCard(centerX, centerY, false);
+            card.makePokemonCard(poke_name);
+            cards.add(card);
+            cardGroup.add(card.getGroup());
+            centerX = centerX + card.CARD_WIDTH + DISTANCE;
+
+            for (int i = 0; i < pokemonImages.size(); i++) {
+                if ((i + 1) % 5 == 0) {
+                    centerY = centerY + card.CARD_HEIGHT + DISTANCE;
+                }
+            }
+        }
+
 
         Collections.shuffle(cards);
         canvas.add(cardGroup);
     }
 
-    private List<String> generatePokemonImages() {
-        List<String> pokemonImages = new ArrayList<>();
-        String[] pokemonNames = {
-            "bulbasaur", "charmander", "chikorita", "cyndaquil",
-            "girafarig", "jigglypuff", "pikachu", "seaking",
-            "sudowoodo", "togepi", "wooper"
-        };
-    
-        for (String name : pokemonNames) {
-            String imagePath = "res/" + name + ".png";
-            pokemonImages.add(imagePath);
-        }
-    
-        return pokemonImages;
-    }
 
     private List<String> pokemonImageStrings(File[] files) {
         List<String> pokemonImages = new ArrayList<>();
