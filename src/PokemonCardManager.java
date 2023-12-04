@@ -27,34 +27,73 @@ public class PokemonCardManager {
     
         List<String> pokemonImages = pokemonImageStrings(files.listFiles());
 
+        Collections.shuffle(pokemonImages);
+
+
         double centerX = 0;
         double centerY = 0;
 
-        for (String poke_name : pokemonImages){
-            PokemonCard card = new PokemonCard(centerX, centerY, false);
-            card.makePokemonCard(poke_name);
-            cards.add(card);
-            cardGroup.add(card.getGroup());
-            centerX = centerX + card.CARD_WIDTH + DISTANCE;
+        int imageIndex = 0;
 
-            for (int i = 0; i < pokemonImages.size(); i++) {
-                if ((i + 1) % 5 == 0) {
-                    centerY = centerY + card.CARD_HEIGHT + DISTANCE;
+        for (int y = 0; y < rows; y++){
+            for (int x = 0; x < columns; x++) {
+                PokemonCard card = new PokemonCard(centerX, centerY, false);
+
+                card.makePokemonCard(pokemonImages.get(imageIndex));
+
+                cards.add(card);
+                cardGroup.add(card.getGroup());
+    
+                centerX += card.CARD_WIDTH + DISTANCE;
+    
+                imageIndex++;
+    
+                if (imageIndex >= pokemonImages.size()) {
+                    break;
                 }
             }
-        }
 
-
-        Collections.shuffle(cards);
-        canvas.add(cardGroup);
+        centerX = 0;
+        centerY += cards.get(0).CARD_HEIGHT + DISTANCE;
     }
+
+    Collections.shuffle(cards);
+    canvas.add(cardGroup);
+
+
+    }
+    public List<PokemonCard> getCards() {
+        return cards;
+    }
+    
+
+
+    //     for (String poke_name : pokemonImages){
+    //         PokemonCard card = new PokemonCard(centerX, centerY, false);
+    //         card.makePokemonCard(poke_name);
+    //         cards.add(card);
+    //         cardGroup.add(card.getGroup());
+    //         centerX += centerX + card.CARD_WIDTH + DISTANCE;
+
+    //         for (int i = 0; i < pokemonImages.size(); i++) {
+    //             if ((i + 1) % 5 == 0) {
+    //                 centerY += centerY + card.CARD_HEIGHT + DISTANCE;
+    //             }
+    //         }
+    //     }
+
+
+    //     Collections.shuffle(cards);
+    //     canvas.add(cardGroup);
+    // }
 
 
     private List<String> pokemonImageStrings(File[] files) {
         List<String> pokemonImages = new ArrayList<>();
         for (File imageFile: files) {
-            String imageFileName = imageFile.getAbsolutePath();
-            pokemonImages.add(imageFileName);
+            String imageName = imageFile.getName(); // Get the file name
+            String pokemonName = imageName.substring(0, imageName.lastIndexOf('.')); // Remove file extension
+            pokemonImages.add(pokemonName);
         }
         return pokemonImages;
     }
