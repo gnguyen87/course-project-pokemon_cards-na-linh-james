@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.Image;
 
 public class GameManager {
     private CanvasWindow canvas;
@@ -14,6 +16,17 @@ public class GameManager {
 
     public GameManager() {
         canvas = new CanvasWindow("Pokemon Card Puzzle", 1200, 1000);
+        addSecretPokemon();
+    }
+
+    private void addSecretPokemon() {
+        GraphicsGroup backgroundGroup = new GraphicsGroup();
+        Image backgroundImage = new Image("rare_pokemon/poke_lover.jpg");
+        backgroundImage.setMaxWidth(0.68*canvas.getWidth());
+        backgroundImage.setMaxHeight(0.68*canvas.getHeight());
+        backgroundGroup.add(backgroundImage);
+        canvas.add(backgroundGroup);
+        backgroundGroup.setCenter(canvas.getWidth()/2, canvas.getHeight()/2);
     }
 
 
