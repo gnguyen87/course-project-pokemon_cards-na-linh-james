@@ -26,45 +26,40 @@ public class PokemonCardManager {
         this.cardGroup = new GraphicsGroup();
     }
 
-    public void cardGenerator(CanvasWindow canvas, int rows, int columns) {
+    public void cardGenerator(CanvasWindow canvas) {
         File files = new File("res/pokemon_images");
     
         List<String> pokemonImages = pokemonImageStrings(files.listFiles());
 
+        List<String> pokemonImages2 = pokemonImageStrings(files.listFiles());
+        pokemonImages.addAll(pokemonImages2);
+
         Collections.shuffle(pokemonImages);
 
+        System.out.println(pokemonImages);
+        double centerX = canvas.getWidth() * 0.1;
+        double centerY = canvas.getWidth() * 0.1;
 
-        double centerX = 0;
-        double centerY = 0;
 
-        int imageIndex = 0;
+        for (int i =0; i < 30; i++) {
+            Pokemon pokemon = new Pokemon("pokemon_images/" + pokemonImages.get(i) + ".png");
+            PokemonCard card = new PokemonCard(centerX, centerY, false, pokemon);
 
-        for (int y = 0; y < rows; y++){
-            for (int x = 0; x < columns; x++) {
-                Pokemon pokemon = new Pokemon(pokemonImages.get(imageIndex));
-                PokemonCard card = new PokemonCard(centerX, centerY, false, pokemon);
+            cards.add(card);
+            cardGroup.add(card);
+            centerX += card.CARD_WIDTH + DISTANCE;
 
-                cards.add(card);
-                cardGroup.add(card.getGroup());
-    
-                centerX += card.CARD_WIDTH + DISTANCE;
-    
-                imageIndex++;
-    
-                if (imageIndex >= pokemonImages.size()) {
-                    break;
-                }
+            if (i % 6 == 5) {
+                centerX = canvas.getWidth() * 0.1;
+                centerY += card.CARD_HEIGHT + DISTANCE * 0.5;
             }
+        }
 
-        centerX = 0;
-        centerY += cards.get(0).CARD_HEIGHT + DISTANCE;
-    }
-
-    Collections.shuffle(cards);
-    canvas.add(cardGroup);
-
+        canvas.add(cardGroup);
+        cardGroup.setCenter(canvas.getWidth() * 0.5, canvas.getHeight() * 0.5);
 
     }
+
   
 
     private List<String> pokemonImageStrings(File[] files) {
@@ -78,53 +73,27 @@ public class PokemonCardManager {
     }
 
     public boolean isValidMatch(PokemonCard card1, PokemonCard card2) {
-        boolean card1_status = card1.getCardStatus();
-        boolean card2_status = card2.getCardStatus();
+        boolean card1_status = card1.isFlipped();
+        boolean card2_status = card2.isFlipped();
         if (card1_status == true && card2_status == true) {
             if (card1.getPokemon().equals(card2.getPokemon())) {
                 cards.remove(card1);
                 cards.remove(card2);
-                cardGroup.remove(card1.getGroup());
-                cardGroup.remove(card2.getGroup());
+                cardGroup.remove(card1);
+                cardGroup.remove(card2);
                 return true;
             } else {
-                card1.getGroup().remove(card1.getPokemon());
-                card2.getGroup().remove(card2.getPokemon());
+                card1.remove(card1.getPokemon());
+                card2.remove(card2.getPokemon());
                 return false;
             }
         }
         return false;
     }
     
-     // check status of card if it's flipped or not
-     private boolean isFlipped(Point clickPoint){
-        GraphicsObject object = cardGroup.getElementAt(clickPoint);
-        if (object != null && object instanceof PokemonCard) {
-            object = (PokemonCard) object;
-            if (object instanceof Pokemon) {
-                
-                return true;
-            }
-        }
-        return false;
-    }
     
-        
-    public void flipCard(Point userPoint) {
-        GraphicsObject object = cardGroup.getCanvas().getElementAt(userPoint);
-        if (object instanceof PokemonCard) {
-            if (object instanceof Pokemon) {
-                
-            }
-        }
-        if (userClicked == true) {
-            if (isFlipped(userPoint) == true) {
-                group.remove(pokemon);
-            } else {
-                group.add(pokemon);
-            }
-        }
-    }
+
+
 
     public List<PokemonCard> getCards() {
         return cards;

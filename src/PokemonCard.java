@@ -9,15 +9,14 @@ import edu.macalester.graphics.Rectangle;
 
 public class PokemonCard extends GraphicsGroup {
     public final double CARD_WIDTH = 120;
-    public final double CARD_HEIGHT = 180;
-
-    private GraphicsGroup group;
+    public final double CARD_HEIGHT = 150;
     private double centerX;
     private double centerY;
     private Rectangle cardShape;
     private Pokemon pokemon;
 
     private boolean flipped = false;
+    private CanvasWindow canvas;
     
     public PokemonCard (double centerX, double centerY, boolean flipped, Pokemon pokemon) {
         super(centerX, centerY);
@@ -26,27 +25,39 @@ public class PokemonCard extends GraphicsGroup {
         this.cardShape = new Rectangle(this.centerX, this.centerY, CARD_WIDTH, CARD_HEIGHT);
         add(cardShape);
         
+        this.pokemon = pokemon;
+        
+        
         pokemon.setCenter(centerX + CARD_WIDTH/2, centerY + CARD_HEIGHT/2);
         pokemon.setMaxWidth(CARD_WIDTH*0.85);
         pokemon.setMaxHeight(CARD_HEIGHT*0.85);
         updatePokemonPosition();
 
         add(pokemon);
-        
-    }
+
     
+    }
+
+    public boolean isFlipped(Point clickPoint){
+        GraphicsObject object = getCanvas().getElementAt(clickPoint);
+        if (object == pokemon) {
+            return true;
+        }
+        return false;
+    }
+
     public void flipCard(Point userPoint) {
-        boolean userClicked = group.testHitInLocalCoordinates(userPoint.getX(), userPoint.getY());
-        if (userClicked == true) {
-           if (flipped) {
+        boolean isClicked = testHitInLocalCoordinates(userPoint.getX(), userPoint.getY());
+        if (isClicked == true) {
+            if (isFlipped(userPoint) == true) {
                 remove(pokemon);
-                flipped = false;
-           } else {
+            } else {
                 add(pokemon);
-                flipped = true;
-           }
+            }
         }
     }
+    
+
  
     private void updatePokemonPosition() {
         pokemon.setCenter(centerX + CARD_WIDTH/2, centerY + CARD_HEIGHT/2);
@@ -60,9 +71,6 @@ public class PokemonCard extends GraphicsGroup {
         return this.flipped;
     }
 
-    public GraphicsGroup getGroup(){
-        return group;
-    }
 
     public Image getPokemon() {
         return pokemon;
