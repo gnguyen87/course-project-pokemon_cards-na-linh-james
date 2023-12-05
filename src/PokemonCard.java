@@ -3,7 +3,6 @@ import java.awt.Color;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsObject;
-import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 
@@ -15,9 +14,6 @@ public class PokemonCard {
     private Rectangle cardShape;
     private Pokemon pokemon;
     private GraphicsGroup group;
-
-    private boolean flipped = false;
-    private CanvasWindow canvas;
     
     public PokemonCard (double centerX, double centerY, boolean flipped, Pokemon pokemon) {
         this.centerX = centerX;
@@ -44,13 +40,29 @@ public class PokemonCard {
         return false;
     }
 
-    public void flipCard(Point userPoint) {
+    public void flipCard(Point userPoint, GameManager gm) {
         boolean isClicked = group.testHitInLocalCoordinates(userPoint.getX(), userPoint.getY());
-        if (isClicked == true) {
-            if (isFlipped(userPoint) == true) {
-                group.remove(pokemon);
+        if (isClicked) {
+            PokemonCard firstFlipped = gm.getFirstFlipped();
+            group.add(pokemon);
+            gm.updateCanvas(); 
+
+            if (firstFlipped == null) {
+                gm.setFirstFlipped(this);
             } else {
-                group.add(pokemon);
+                gm.pauseCanvas();
+                if (firstFlipped.equals(this)) {
+                    removePokemon();
+                } else {
+                    if (pokemon.compareTo(firstFlipped.getPokemon()) == 0) {
+                        gm.removeCard(firstFlipped);
+                        gm.removeCard(this);
+                    } else {
+                        firstFlipped.removePokemon();
+                        removePokemon();
+                    }
+                }
+                gm.setFirstFlipped(null);
             }
         }
     }
@@ -59,15 +71,7 @@ public class PokemonCard {
         pokemon.setCenter(centerX + CARD_WIDTH/2, centerY + CARD_HEIGHT/2);
     }
 
-    public void setCardStatus(boolean newStatus) {
-        this.flipped = newStatus;
-    }
-
-    public boolean isFlipped() {
-        return this.flipped;
-    }
-
-    public Image getPokemon() {
+    public Pokemon getPokemon() {
         return pokemon;
     }
 
@@ -79,5 +83,9 @@ public class PokemonCard {
         cardShape.setFillColor(Color.PINK);
         cardShape.setStrokeColor(Color.PINK);
         canvas.add(group);
+    }
+
+    public void removePokemon() {
+        group.remove(pokemon);
     }
 }
