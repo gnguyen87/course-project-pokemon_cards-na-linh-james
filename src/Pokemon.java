@@ -6,6 +6,4 @@ public class Pokemon extends Image {
         super(name);
 
     }
-
-
 }

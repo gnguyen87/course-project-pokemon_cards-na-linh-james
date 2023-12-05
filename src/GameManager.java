@@ -26,7 +26,7 @@ public class GameManager {
 
         System.out.println(pokemonImages);
         double centerX = canvas.getWidth() * 0.15;
-        double centerY = canvas.getWidth() * 0.03;
+        double centerY = canvas.getHeight() * 0.03;
 
 
         for (int i =0; i < 30; i++) {

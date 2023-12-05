@@ -31,13 +31,9 @@ public class PokemonCard {
         
         
         pokemon.setCenter(centerX + CARD_WIDTH/2, centerY + CARD_HEIGHT/2);
-        pokemon.setMaxWidth(CARD_WIDTH*0.85);
-        pokemon.setMaxHeight(CARD_HEIGHT*0.85);
+        pokemon.setMaxWidth(CARD_WIDTH*0.9);
+        pokemon.setMaxHeight(CARD_HEIGHT*0.9);
         updatePokemonPosition();
-
-        group.add(pokemon);
-
-    
     }
 
     public boolean isFlipped(Point clickPoint){
@@ -58,9 +54,6 @@ public class PokemonCard {
             }
         }
     }
-  
-    
-
  
     private void updatePokemonPosition() {
         pokemon.setCenter(centerX + CARD_WIDTH/2, centerY + CARD_HEIGHT/2);
@@ -74,7 +67,6 @@ public class PokemonCard {
         return this.flipped;
     }
 
-
     public Image getPokemon() {
         return pokemon;
     }
@@ -85,14 +77,7 @@ public class PokemonCard {
 
     public void addToCanvas(CanvasWindow canvas) {
         cardShape.setFillColor(Color.PINK);
+        cardShape.setStrokeColor(Color.PINK);
         canvas.add(group);
     }
-
-    
-
-
-
-
-    
- 
 }
