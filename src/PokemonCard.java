@@ -7,7 +7,7 @@ import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 
-public class PokemonCard {
+public class PokemonCard extends GraphicsGroup {
     public final double CARD_WIDTH = 120;
     public final double CARD_HEIGHT = 180;
 
@@ -15,63 +15,63 @@ public class PokemonCard {
     private double centerX;
     private double centerY;
     private Rectangle cardShape;
-    private Image pokemon;
+    private Pokemon pokemon;
+
     private boolean flipped = false;
     
-    public PokemonCard (double centerX, double centerY, boolean flipped) {
-        this.centerX = centerX;
-        this.centerY = centerY;
-        this.flipped = flipped;
+    public PokemonCard (double centerX, double centerY, boolean flipped, Pokemon pokemon) {
+        super(centerX, centerY);
 
-        group = new GraphicsGroup();
-        
+
         this.cardShape = new Rectangle(this.centerX, this.centerY, CARD_WIDTH, CARD_HEIGHT);
-        group.add(cardShape);
-    }
-
-    public void makePokemonCard(String name){
-        pokemon = new Image(this.centerX + CARD_WIDTH/2, this.centerY + CARD_HEIGHT/2);
+        add(cardShape);
+        
+        pokemon.setCenter(centerX + CARD_WIDTH/2, centerY + CARD_HEIGHT/2);
         pokemon.setMaxWidth(CARD_WIDTH*0.85);
         pokemon.setMaxHeight(CARD_HEIGHT*0.85);
-        pokemon.setImagePath("pokemon_images/" + name + ".png");
         updatePokemonPosition();
-    }
 
-    public boolean isFlipped(Point clickPoint){
-        GraphicsObject object = group.getCanvas().getElementAt(clickPoint);
-        if (object == pokemon) {
-            return true;
-        }
-        return false;
+        add(pokemon);
+        
     }
-
-    public void cardClicked(Point userPoint) {
-        boolean isClicked = group.testHitInLocalCoordinates(userPoint.getX(), userPoint.getY());
-        if (isClicked == true) {
-            if (isFlipped(userPoint) == true) {
-                group.remove(pokemon);
-            } else {
-                group.add(pokemon);
-            }
+    
+    public void flipCard(Point userPoint) {
+        boolean userClicked = group.testHitInLocalCoordinates(userPoint.getX(), userPoint.getY());
+        if (userClicked == true) {
+           if (flipped) {
+                remove(pokemon);
+                flipped = false;
+           } else {
+                add(pokemon);
+                flipped = true;
+           }
         }
     }
-
+ 
     private void updatePokemonPosition() {
         pokemon.setCenter(centerX + CARD_WIDTH/2, centerY + CARD_HEIGHT/2);
     }
 
-    public void addToCanvas(CanvasWindow canvas) {
-        cardShape.setFillColor(Color.PINK);
-        canvas.add(group);
+    public void setCardStatus(boolean newStatus) {
+        this.flipped = newStatus;
     }
 
-    public void removeFromCanvas(CanvasWindow canvas) {
-        canvas.remove(group);
+    public boolean isFlipped() {
+        return this.flipped;
     }
 
     public GraphicsGroup getGroup(){
         return group;
     }
+
+    public Image getPokemon() {
+        return pokemon;
+    }
+
+    
+
+
+
 
     
  
