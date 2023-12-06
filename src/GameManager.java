@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.TextArea;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -5,7 +7,9 @@ import java.util.List;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
+import edu.macalester.graphics.ui.TextField;
 
 public class GameManager {
     private CanvasWindow canvas;
@@ -13,21 +17,40 @@ public class GameManager {
     private PokemonCard firstFlipped;
 
     private final double DISTANCE = 20;
+    private int remainingTimeInSeconds = 5 * 60; // 5 minutes in seconds
+    private GraphicsGroup timerGroup;
 
     public GameManager() {
         canvas = new CanvasWindow("Pokemon Card Puzzle", 1200, 1000);
-        addSecretPokemon();
+        // addSecretPokemon();
+        startTimer();
+        // addTimerPokemon();
     }
 
     private void addSecretPokemon() {
-        GraphicsGroup backgroundGroup = new GraphicsGroup();
         Image backgroundImage = new Image("rare_pokemon/poke_lover.jpg");
         backgroundImage.setMaxWidth(0.68*canvas.getWidth());
         backgroundImage.setMaxHeight(0.68*canvas.getHeight());
-        backgroundGroup.add(backgroundImage);
-        canvas.add(backgroundGroup);
-        backgroundGroup.setCenter(canvas.getWidth()/2, canvas.getHeight()/2);
+        canvas.add(backgroundImage);
+        backgroundImage.setCenter(canvas.getWidth()/2, canvas.getHeight()/2);
     }
+
+    // trying to make a cute pokemon near the timer
+    // private void addTimerPokemon() {
+    //     GraphicsGroup timeDecoration = new GraphicsGroup();
+    //     Image timerPokemon = new Image("pokemon_images/evie.png");
+    //     timerPokemon.setMaxHeight(120);
+    //     timerPokemon.setMaxWidth(120);
+    //     timerPokemon.setPosition(50, 100);
+
+    //     GraphicsText timeSign = new GraphicsText("Timer");
+    //     timeSign.setFontSize(40);
+    //     timerPokemon.setPosition(50, 150);
+    //     timeDecoration.add(timeSign);
+
+    //     timeDecoration.add(timerPokemon);
+    //     canvas.add(timeDecoration);
+    // }
 
 
     public void cardGenerator() {
@@ -90,5 +113,43 @@ public class GameManager {
 
     public void updateCanvas() {
         canvas.draw();
+    }
+
+    private void startTimer() {
+        timerGroup = new GraphicsGroup();
+
+        canvas.add(timerGroup);
+        
+        Thread timerThread = new Thread(() -> {
+            while (remainingTimeInSeconds > 0) {
+                updateTimerDisplay();
+                try {
+                    Thread.sleep(1000); // Sleep for 1 second
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                remainingTimeInSeconds--;
+            }
+            // Game over logic can be added here
+            System.out.println("Game Over!");
+        });
+
+        timerThread.start();
+    }
+
+    private void updateTimerDisplay() {
+        int minutes = remainingTimeInSeconds / 60;
+        int seconds = remainingTimeInSeconds % 60;
+        String timeString = String.format("%02d:%02d", minutes, seconds);
+
+        // Clear previous timer display
+        timerGroup.removeAll();
+
+        // Add the updated timer display to the canvas
+        GraphicsText timerText = new GraphicsText(timeString);
+        // timerText.setFillColor(Color.PINK);
+        timerText.setFontSize(40);
+        timerGroup.add(timerText);
+        timerGroup.setCenter(70, 50);
     }
 }
