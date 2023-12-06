@@ -46,7 +46,7 @@ public class PokemonCard {
             PokemonCard firstFlipped = gm.getFirstFlipped();
             group.add(pokemon);
             gm.updateCanvas(); 
-
+    
             if (firstFlipped == null) {
                 gm.setFirstFlipped(this);
             } else {
@@ -60,13 +60,14 @@ public class PokemonCard {
                     } else {
                         firstFlipped.removePokemon();
                         removePokemon();
+                        gm.AttemptsCount(); // Increment attempts count only for mismatches
                     }
                 }
                 gm.setFirstFlipped(null);
             }
         }
     }
- 
+    
     private void updatePokemonPosition() {
         pokemon.setCenter(centerX + CARD_WIDTH/2, centerY + CARD_HEIGHT/2);
     }

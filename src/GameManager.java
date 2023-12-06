@@ -20,11 +20,38 @@ public class GameManager {
     private int remainingTimeInSeconds = 5 * 60; // 5 minutes in seconds
     private GraphicsGroup timerGroup;
 
+    private int attemptsCount = 10;
+    // private final int MAX_ATTEMPTS = 50; // Update the maximum attempts
+    // private int current_attempts = 50; // Update the maximum attempts
+
+    private GraphicsText attemptsText;
+    private GraphicsText gameOverText;
+    private Image gameOverImage;
+
+
+
+
+
+
+
     public GameManager() {
         canvas = new CanvasWindow("Pokemon Card Puzzle", 1200, 1000);
         // addSecretPokemon();
         startTimer();
         // addTimerPokemon();
+        attemptsText = new GraphicsText("Attempts: " + attemptsCount);
+        attemptsText.setFontSize(20);
+        canvas.add(attemptsText);
+
+        attemptsText.setCenter(canvas.getWidth() - 70, 50);
+        gameOverText = new GraphicsText("Game Over!");
+        gameOverText.setFontSize(40);
+        gameOverText.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 2);
+
+        gameOverImage = new Image("game_over/poke_game_over.png");
+        gameOverImage.setMaxWidth(canvas.getWidth());
+        gameOverImage.setMaxHeight(canvas.getHeight());
+        gameOverImage.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 2);
     }
 
     private void addSecretPokemon() {
@@ -35,10 +62,10 @@ public class GameManager {
         backgroundImage.setCenter(canvas.getWidth()/2, canvas.getHeight()/2);
     }
 
-    // trying to make a cute pokemon near the timer
+    // // trying to make a cute pokemon near the timer
     // private void addTimerPokemon() {
     //     GraphicsGroup timeDecoration = new GraphicsGroup();
-    //     Image timerPokemon = new Image("pokemon_images/evie.png");
+    //     Image timerPokemon = new Image("res/pokemon_images/evie.png");
     //     timerPokemon.setMaxHeight(120);
     //     timerPokemon.setMaxWidth(120);
     //     timerPokemon.setPosition(50, 100);
@@ -51,6 +78,7 @@ public class GameManager {
     //     timeDecoration.add(timerPokemon);
     //     canvas.add(timeDecoration);
     // }
+
 
 
     public void cardGenerator() {
@@ -129,10 +157,22 @@ public class GameManager {
                     e.printStackTrace();
                 }
                 remainingTimeInSeconds--;
-            }
+
+                
+            } 
             // Game over logic can be added here
-            System.out.println("Game Over!");
-        });
+            // System.out.println("Game Over!");
+            if (remainingTimeInSeconds <= 0) {
+                    canvas.removeAll();
+                    canvas.add(gameOverImage);
+            } 
+            else {
+                    attemptsText.setText("Attempts: " + attemptsCount);
+                    updateCanvas();
+            }
+        }
+        );
+            
 
         timerThread.start();
     }
@@ -147,9 +187,33 @@ public class GameManager {
 
         // Add the updated timer display to the canvas
         GraphicsText timerText = new GraphicsText(timeString);
-        // timerText.setFillColor(Color.PINK);
+       // timerText.setFillColor(Color.PINK);
         timerText.setFontSize(40);
         timerGroup.add(timerText);
         timerGroup.setCenter(70, 50);
     }
-}
+
+
+
+
+
+    public void AttemptsCount() {
+        attemptsCount--;
+    
+        if (attemptsCount <= 0) {
+            canvas.removeAll();
+            updateGameOverDisplay();
+        } else {
+            attemptsText.setText("Attempts: " + attemptsCount);
+            updateCanvas();
+        }
+    }
+
+    private void updateGameOverDisplay() {
+        canvas.removeAll();
+        canvas.add(gameOverImage);
+    }
+
+
+    }
+
