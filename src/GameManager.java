@@ -7,8 +7,10 @@ import java.util.List;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
+import edu.macalester.graphics.Rectangle;
 import edu.macalester.graphics.ui.TextField;
 
 public class GameManager {
@@ -27,12 +29,9 @@ public class GameManager {
     private GraphicsText attemptsText;
     private GraphicsText gameOverText;
     private Image gameOverImage;
-
-
-
-
-
-
+    private Rectangle timerBarOutline;
+    private Rectangle timerBar;
+    private Image timerPokemon;
 
     public GameManager() {
         canvas = new CanvasWindow("Pokemon Card Puzzle", 1200, 1000);
@@ -61,24 +60,6 @@ public class GameManager {
         canvas.add(backgroundImage);
         backgroundImage.setCenter(canvas.getWidth()/2, canvas.getHeight()/2);
     }
-
-    // // trying to make a cute pokemon near the timer
-    // private void addTimerPokemon() {
-    //     GraphicsGroup timeDecoration = new GraphicsGroup();
-    //     Image timerPokemon = new Image("res/pokemon_images/evie.png");
-    //     timerPokemon.setMaxHeight(120);
-    //     timerPokemon.setMaxWidth(120);
-    //     timerPokemon.setPosition(50, 100);
-
-    //     GraphicsText timeSign = new GraphicsText("Timer");
-    //     timeSign.setFontSize(40);
-    //     timerPokemon.setPosition(50, 150);
-    //     timeDecoration.add(timeSign);
-
-    //     timeDecoration.add(timerPokemon);
-    //     canvas.add(timeDecoration);
-    // }
-
 
 
     public void cardGenerator() {
@@ -142,11 +123,34 @@ public class GameManager {
     public void updateCanvas() {
         canvas.draw();
     }
+    
+    private void drawTimerBar(){
+        timerBarOutline = new Rectangle(70, 170, 40, 550);
+        timerBarOutline.setStrokeWidth(2.5);
+        timerBarOutline.setStrokeColor(Color.BLACK);
+        canvas.add(timerBarOutline);
+
+        timerBar = new Rectangle(72.5, 172.5, 35, 545);
+        timerBar.setFillColor(Color.PINK);
+        timerBar.setStrokeColor(Color.PINK);
+        canvas.add(timerBar);
+    }
+
+    // // trying to make a cute pokemon near the timer
+    private void addTimerPokemon() {
+        timerPokemon = new Image("pokemon_images/evie.png");
+        timerPokemon.setMaxHeight(120);
+        timerPokemon.setMaxWidth(120);
+        timerPokemon.setPosition(42, 60);
+        canvas.add(timerPokemon);
+    }
+
 
     private void startTimer() {
         timerGroup = new GraphicsGroup();
-
         canvas.add(timerGroup);
+        drawTimerBar();
+        addTimerPokemon();
         
         Thread timerThread = new Thread(() -> {
             while (remainingTimeInSeconds > 0) {
@@ -156,12 +160,9 @@ public class GameManager {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                remainingTimeInSeconds--;
-
-                
+                remainingTimeInSeconds--;        
             } 
             // Game over logic can be added here
-            // System.out.println("Game Over!");
             if (remainingTimeInSeconds <= 0) {
                     canvas.removeAll();
                     canvas.add(gameOverImage);
@@ -182,20 +183,30 @@ public class GameManager {
         int seconds = remainingTimeInSeconds % 60;
         String timeString = String.format("%02d:%02d", minutes, seconds);
 
+        // Calculate the ratio of remaining time to the initial time
+        double ratio = (double) remainingTimeInSeconds / (5 * 60); // Assuming initial time is 5 minutes
+
+        // Calculate the new height of the timerBar
+        double newHeight = ratio * 545; // 545 is the initial height of the timerBar
+        double newY = 717.5 - newHeight; // 717.5 is the initial bottom y-position of the timerBar
+        double newYPokemon = 60 + 545 - newHeight;
+
+        // Update the timerBar height
+        timerBar.setSize(35, newHeight);
+        timerBar.setPosition(72.5, newY);
+
+        // Update the position of timerPokemon
+        timerPokemon.setPosition(42, newYPokemon);
+
         // Clear previous timer display
         timerGroup.removeAll();
 
         // Add the updated timer display to the canvas
         GraphicsText timerText = new GraphicsText(timeString);
-       // timerText.setFillColor(Color.PINK);
         timerText.setFontSize(40);
         timerGroup.add(timerText);
         timerGroup.setCenter(70, 50);
     }
-
-
-
-
 
     public void AttemptsCount() {
         attemptsCount--;
@@ -213,7 +224,5 @@ public class GameManager {
         canvas.removeAll();
         canvas.add(gameOverImage);
     }
-
-
-    }
+}
 
