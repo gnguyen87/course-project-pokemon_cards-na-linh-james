@@ -32,17 +32,18 @@ public class GameManager {
     private Rectangle timerBarOutline;
     private Rectangle timerBar;
     private Image timerPokemon;
+    private Image pokeball;
 
     public GameManager() {
         canvas = new CanvasWindow("Pokemon Card Puzzle", 1200, 1000);
-        // addSecretPokemon();
+   
         startTimer();
-        // addTimerPokemon();
+
         attemptsText = new GraphicsText("Attempts: " + attemptsCount);
         attemptsText.setFontSize(20);
         canvas.add(attemptsText);
 
-        attemptsText.setCenter(canvas.getWidth() - 70, 50);
+        attemptsText.setCenter(canvas.getWidth() - 100, 50);
         gameOverText = new GraphicsText("Game Over!");
         gameOverText.setFontSize(40);
         gameOverText.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 2);
@@ -51,15 +52,14 @@ public class GameManager {
         gameOverImage.setMaxWidth(canvas.getWidth());
         gameOverImage.setMaxHeight(canvas.getHeight());
         gameOverImage.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 2);
+
+        pokeball = new Image("pokeball.png");
+        pokeball.setMaxHeight(100);
+        pokeball.setMaxWidth(100);
+        pokeball.setCenter(canvas.getWidth() - 100, 150);
+        canvas.add(pokeball);
     }
 
-    private void addSecretPokemon() {
-        Image backgroundImage = new Image("rare_pokemon/poke_lover.jpg");
-        backgroundImage.setMaxWidth(0.68*canvas.getWidth());
-        backgroundImage.setMaxHeight(0.68*canvas.getHeight());
-        canvas.add(backgroundImage);
-        backgroundImage.setCenter(canvas.getWidth()/2, canvas.getHeight()/2);
-    }
 
 
     public void cardGenerator() {
@@ -224,5 +224,32 @@ public class GameManager {
         canvas.removeAll();
         canvas.add(gameOverImage);
     }
+
+    public void ringPokeBall() {
+        double initialY = pokeball.getCenter().getY();
+        double distance = 5; // Adjust the distance the Pokeball will move
+        double duration = 1000; // Duration of the animation in milliseconds
+        long startTime = System.currentTimeMillis();
+    
+        Thread pokeballAnimation = new Thread(() -> {
+            while (System.currentTimeMillis() - startTime < duration) {
+                double timeElapsed = System.currentTimeMillis() - startTime;
+                double newY = initialY + distance * Math.sin((timeElapsed / duration) * Math.PI * 2);
+                
+                // Update the Pokeball position
+                pokeball.setCenter(pokeball.getCenter().getX(), newY);
+    
+                // Redraw the canvas
+                updateCanvas();
+            }
+
+            // Reset the Pokeball position to the initial position after animation completes
+            pokeball.setCenter(pokeball.getCenter().getX(), initialY);
+            updateCanvas();
+        });
+    
+        pokeballAnimation.start();
+    }
+    
 }
 

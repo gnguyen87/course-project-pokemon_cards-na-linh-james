@@ -27,8 +27,8 @@ public class PokemonCard {
         
         
         pokemon.setCenter(centerX + CARD_WIDTH/2, centerY + CARD_HEIGHT/2);
-        pokemon.setMaxWidth(CARD_WIDTH*0.9);
-        pokemon.setMaxHeight(CARD_HEIGHT*0.9);
+        pokemon.setMaxWidth(CARD_WIDTH);
+        pokemon.setMaxHeight(CARD_HEIGHT);
         updatePokemonPosition();
     }
 
@@ -55,6 +55,7 @@ public class PokemonCard {
                     removePokemon();
                 } else {
                     if (pokemon.compareTo(firstFlipped.getPokemon()) == 0) {
+                        gm.ringPokeBall();
                         gm.removeCard(firstFlipped);
                         gm.removeCard(this);
                     } else {
