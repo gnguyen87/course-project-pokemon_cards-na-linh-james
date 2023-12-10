@@ -1,5 +1,4 @@
 import java.awt.Color;
-import java.awt.TextArea;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,11 +6,9 @@ import java.util.List;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
-import edu.macalester.graphics.ui.TextField;
 
 public class GameManager {
     private CanvasWindow canvas;
@@ -23,8 +20,6 @@ public class GameManager {
     private GraphicsGroup timerGroup;
 
     private int attemptsCount = 10;
-    // private final int MAX_ATTEMPTS = 50; // Update the maximum attempts
-    // private int current_attempts = 50; // Update the maximum attempts
 
     private GraphicsText attemptsText;
     private GraphicsText gameOverText;
@@ -227,8 +222,8 @@ public class GameManager {
 
     public void ringPokeBall() {
         double initialY = pokeball.getCenter().getY();
-        double distance = 5; // Adjust the distance the Pokeball will move
-        double duration = 1000; // Duration of the animation in milliseconds
+        double distance = 5; 
+        double duration = 1000; 
         long startTime = System.currentTimeMillis();
     
         Thread pokeballAnimation = new Thread(() -> {
@@ -238,14 +233,13 @@ public class GameManager {
                 
                 // Update the Pokeball position
                 pokeball.setCenter(pokeball.getCenter().getX(), newY);
-    
-                // Redraw the canvas
-                updateCanvas();
+                
+                canvas.draw();
             }
 
             // Reset the Pokeball position to the initial position after animation completes
             pokeball.setCenter(pokeball.getCenter().getX(), initialY);
-            updateCanvas();
+            canvas.draw();
         });
     
         pokeballAnimation.start();

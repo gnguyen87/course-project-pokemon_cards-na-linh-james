@@ -50,15 +50,16 @@ public class PokemonCard {
             if (firstFlipped == null) {
                 gm.setFirstFlipped(this);
             } else {
-                gm.pauseCanvas();
                 if (firstFlipped.equals(this)) {
                     removePokemon();
                 } else {
                     if (pokemon.compareTo(firstFlipped.getPokemon()) == 0) {
                         gm.ringPokeBall();
+                        gm.pauseCanvas();
                         gm.removeCard(firstFlipped);
                         gm.removeCard(this);
                     } else {
+                        gm.pauseCanvas();
                         firstFlipped.removePokemon();
                         removePokemon();
                         gm.AttemptsCount(); // Increment attempts count only for mismatches
