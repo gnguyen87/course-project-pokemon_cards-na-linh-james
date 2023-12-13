@@ -9,9 +9,13 @@ import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
+import edu.macalester.graphics.ui.TextField;
+import edu.macalester.graphics.Point; 
+
 
 public class GameManager {
     private CanvasWindow canvas;
+
     private List<PokemonCard> cards = new ArrayList<>();
     private PokemonCard firstFlipped;
 
@@ -19,11 +23,16 @@ public class GameManager {
     private int remainingTimeInSeconds = 5 * 60; // 5 minutes in seconds
     private GraphicsGroup timerGroup;
 
-    private int attemptsCount = 10;
+    private int attemptsCount = 30;
+    // private final int MAX_ATTEMPTS = 50; // Update the maximum attempts
+    // private int current_attempts = 50; // Update the maximum attempts
 
     private GraphicsText attemptsText;
     private GraphicsText gameOverText;
     private Image gameOverImage;
+
+    private Image winningImage;
+
     private Rectangle timerBarOutline;
     private Rectangle timerBar;
     private Image timerPokemon;
@@ -53,40 +62,74 @@ public class GameManager {
         pokeball.setMaxWidth(100);
         pokeball.setCenter(canvas.getWidth() - 100, 150);
         canvas.add(pokeball);
+        winningImage = new Image("game_over/poke_game_over.png");
+        winningImage.setMaxWidth(canvas.getWidth());
+        winningImage.setMaxHeight(canvas.getHeight());
+        winningImage.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 2); 
     }
 
 
 
-    public void cardGenerator() {
+    public void cardGenerator(int numPairs) {
+        int numberOfCards = numPairs * 2;
+    
         File files = new File("res/pokemon_images");
     
         List<String> pokemonImages = pokemonImageStrings(files.listFiles());
-        List<String> pokemonImages2 = pokemonImageStrings(files.listFiles());
-        pokemonImages.addAll(pokemonImages2);
-
-        Collections.shuffle(pokemonImages);
-
-        System.out.println(pokemonImages);
+    
+        // Shuffle and select a subset of unique Pokemon images
+        List<String> selectedImages = new ArrayList<>(pokemonImages.subList(0, numPairs));
+        selectedImages.addAll(selectedImages); // Duplicate to create pairs
+        Collections.shuffle(selectedImages);
+    
         double centerX = canvas.getWidth() * 0.15;
         double centerY = canvas.getHeight() * 0.03;
 
-        for (int i = 0; i < 30; i++) {
-            Pokemon pokemon = new Pokemon("pokemon_images/" + pokemonImages.get(i) + ".png");
+        int numRows, numCols;
+
+        // Set the grid layout based on the difficulty level
+        if (numPairs == 5) { // Easy
+            numRows = 2;
+            numCols = 5;
+        } else if (numPairs == 10) { // Medium
+            numRows = 4;
+            numCols = 5;
+        } else if (numPairs == 15) { // Hard
+            numRows = 5;
+            numCols = 6;
+        } else {
+            // Default to a 4x4 grid if the difficulty level is unknown
+            numRows = 4;
+            numCols = 4;
+        }
+    
+        for (int i = 0; i < numberOfCards; i++) {
+            Pokemon pokemon = new Pokemon("pokemon_images/" + selectedImages.get(i) + ".png");
             PokemonCard card = new PokemonCard(centerX, centerY, false, pokemon);
             cards.add(card);
-
+    
             card.addToCanvas(canvas);
             canvas.onClick(event -> card.flipCard(event.getPosition(), this));
-
+    
             centerX += card.CARD_WIDTH + DISTANCE;
-
-            if (i % 6 == 5) {
+    
+            if (i % numCols == numCols - 1) {
                 centerX = canvas.getWidth() * 0.15;
                 centerY += card.CARD_HEIGHT + DISTANCE * 0.5;
             }
         }
+
+        if (cards.isEmpty()) {
+            displayWinningImage();
+        }
     }
 
+    private void displayWinningImage() {
+        canvas.removeAll(); 
+        canvas.add(winningImage);
+    }
+    
+    
 
     private List<String> pokemonImageStrings(File[] files) {
         List<String> pokemonImages = new ArrayList<>();
@@ -245,5 +288,15 @@ public class GameManager {
         pokeballAnimation.start();
     }
     
+
+    public void displayStartMenu() {
+        StartMenu.displayStartMenu(this);
+    }
+       
+    void startGame(int numPairs) {
+        cardGenerator(numPairs);
+
+    }
 }
+
 
