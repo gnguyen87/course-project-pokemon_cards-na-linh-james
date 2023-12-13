@@ -1,6 +1,3 @@
-import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.GraphicsText;
-
 public class PokemonCardGame {
     private GameManager gameManager;
 
@@ -9,6 +6,9 @@ public class PokemonCardGame {
         game.run();
     }
 
+    /**
+     * Create a Game Manager object to run the game and call method to display the game menu first.
+     */
     public void run() {
         gameManager = new GameManager();
         gameManager.displayStartMenu();

@@ -9,9 +9,6 @@ import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
-import edu.macalester.graphics.ui.TextField;
-import edu.macalester.graphics.Point; 
-
 
 public class GameManager {
     private CanvasWindow canvas;
@@ -69,7 +66,11 @@ public class GameManager {
     }
 
 
-
+    /**
+     * Randomly select pokemon images to make the cards everytime the method is called.
+     * Depending on how many cards we need, lay them out on the screen accordingly.
+     * @param numPairs number of pair of pokemon cards to be generated
+     */
     public void cardGenerator(int numPairs) {
         int numberOfCards = numPairs * 2;
     
@@ -124,13 +125,20 @@ public class GameManager {
         }
     }
 
+    /**
+     * If the user has won the game, aka pairing all pokemon cards, remove everything
+     * from canvas and display the winning background.
+     */
     private void displayWinningImage() {
         canvas.removeAll(); 
         canvas.add(winningImage);
     }
     
-    
-
+    /**
+     * 
+     * @param files
+     * @return
+     */
     private List<String> pokemonImageStrings(File[] files) {
         List<String> pokemonImages = new ArrayList<>();
         for (File imageFile: files) {
@@ -141,15 +149,26 @@ public class GameManager {
         return pokemonImages;
     }
 
+    /**
+     * Remove a pokemon card (both pokemon image and card frame) from canvas.
+     * @param card
+     */
     public void removeCard(PokemonCard card) {
         canvas.remove(card.getGraphicsGroup());
         cards.remove(card);
     }
 
+    /**
+     * @return the first card that the user has clicked on.
+     */
     public PokemonCard getFirstFlipped() {
         return firstFlipped;
     }
 
+    /**
+     * 
+     * @param card
+     */
     public void setFirstFlipped(PokemonCard card) {
         firstFlipped = card;
     }
@@ -162,6 +181,10 @@ public class GameManager {
         canvas.draw();
     }
     
+    /**
+     * Draws the timer bar including the black void outline of the bar that stays the same
+     * and the pink fill that will changes in size depending on how many time is left.
+     */
     private void drawTimerBar(){
         timerBarOutline = new Rectangle(70, 170, 40, 550);
         timerBarOutline.setStrokeWidth(2.5);
@@ -174,7 +197,10 @@ public class GameManager {
         canvas.add(timerBar);
     }
 
-    // // trying to make a cute pokemon near the timer
+    /**
+     * Draws the small pokemon on top of the timer bar that will moves with the pink fill
+     * when it goes down, aka when time decreases.
+     */
     private void addTimerPokemon() {
         timerPokemon = new Image("pokemon_images/evie.png");
         timerPokemon.setMaxHeight(120);
@@ -183,7 +209,12 @@ public class GameManager {
         canvas.add(timerPokemon);
     }
 
-
+    /**
+     * Calls helper methods to draw all the elements of time management.
+     * Starts counting down when the game starts and changes numeric time display
+     * and visual time bar every second time goes down.
+     * If time runs out without matching all pairs, set canvas to losing image.
+     */
     private void startTimer() {
         timerGroup = new GraphicsGroup();
         canvas.add(timerGroup);
@@ -211,11 +242,12 @@ public class GameManager {
             }
         }
         );
-            
-
         timerThread.start();
     }
 
+    /**
+     * Helper method to update the numeric and visual displays of time.
+     */
     private void updateTimerDisplay() {
         int minutes = remainingTimeInSeconds / 60;
         int seconds = remainingTimeInSeconds % 60;
@@ -246,6 +278,10 @@ public class GameManager {
         timerGroup.setCenter(70, 50);
     }
 
+    /**
+     * Method to decrease number of attempts after matching an unsuccessful pairs,
+     * update it on the canvas and if attempts run out, set canvas to losing image.
+     */
     public void AttemptsCount() {
         attemptsCount--;
     
@@ -258,11 +294,17 @@ public class GameManager {
         }
     }
 
+    /**
+     * Removes everything from canvas to display losing image when user loses the game.
+     */
     private void updateGameOverDisplay() {
         canvas.removeAll();
         canvas.add(gameOverImage);
     }
 
+    /**
+     * Every time the user successfully matches a pokemon pair, the pokemon ball on the side will jingle.
+     */
     public void ringPokeBall() {
         double initialY = pokeball.getCenter().getY();
         double distance = 5; 
@@ -286,16 +328,18 @@ public class GameManager {
         });
     
         pokeballAnimation.start();
-    }
-    
+    }   
 
     public void displayStartMenu() {
         StartMenu.displayStartMenu(this);
     }
        
+    /**
+     * With the entry of number of pairs depending on game levels, generate those cards for the game.
+     * @param numPairs
+     */
     void startGame(int numPairs) {
         cardGenerator(numPairs);
-
     }
 }
 

@@ -24,14 +24,17 @@ public class PokemonCard {
         group.add(cardShape);
         
         this.pokemon = pokemon;
-        
-        
         pokemon.setCenter(centerX + CARD_WIDTH/2, centerY + CARD_HEIGHT/2);
         pokemon.setMaxWidth(CARD_WIDTH);
         pokemon.setMaxHeight(CARD_HEIGHT);
         updatePokemonPosition();
     }
 
+    /**
+     * @param clickPoint user's input by clicking on the canvas
+     * @return true if the user has clicked on the position where a Pokemon image is 
+     * supposed to be
+     */
     public boolean isFlipped(Point clickPoint){
         GraphicsObject object = group.getCanvas().getElementAt(clickPoint);
         if (object == pokemon) {
@@ -40,6 +43,13 @@ public class PokemonCard {
         return false;
     }
 
+    /**
+     * Makes the pokemon image appears after the user clicks on a card.
+     * If the users click on a pair of same pokemon cards, remove the pair from canvas. If the pair is 
+     * not matched, update the number of attempts user has left and flip back cards.
+     * @param userPoint user's input by clicking on the pokemon card
+     * @param gm a Game Manager object
+     */
     public void flipCard(Point userPoint, GameManager gm) {
         boolean isClicked = group.testHitInLocalCoordinates(userPoint.getX(), userPoint.getY());
         if (isClicked) {
@@ -72,24 +82,43 @@ public class PokemonCard {
         }
     }
     
+    /**
+     * Positions the pokemon image to the center of the pink card frame.
+     */
     private void updatePokemonPosition() {
         pokemon.setCenter(centerX + CARD_WIDTH/2, centerY + CARD_HEIGHT/2);
     }
 
+    /**
+     * Getter method
+     * @return an individual pokemon card that has been generated.
+     */
     public Pokemon getPokemon() {
         return pokemon;
     }
 
+    /**
+     * Getter method
+     * @return Graphics Group of all pokemon cards
+     */
     public GraphicsGroup getGraphicsGroup() {
         return group;
     }
 
+    /**
+     * Add the frame of the pokemon card (pink filled rectangle) to canvas and to the
+     * pokemon group
+     * @param canvas
+     */
     public void addToCanvas(CanvasWindow canvas) {
         cardShape.setFillColor(Color.PINK);
         cardShape.setStrokeColor(Color.PINK);
         canvas.add(group);
     }
 
+    /**
+     * Removes a pokemon card from the group of pokemon cards.
+     */
     public void removePokemon() {
         group.remove(pokemon);
     }
