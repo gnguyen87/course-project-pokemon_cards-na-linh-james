@@ -58,10 +58,12 @@ public class PokemonCard {
                         gm.pauseCanvas();
                         gm.removeCard(firstFlipped);
                         gm.removeCard(this);
+                        gm.updateCanvas(); 
                     } else {
                         gm.pauseCanvas();
                         firstFlipped.removePokemon();
                         removePokemon();
+                        gm.updateCanvas(); 
                         gm.AttemptsCount(); // Increment attempts count only for mismatches
                     }
                 }
