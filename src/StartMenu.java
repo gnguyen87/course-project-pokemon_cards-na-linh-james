@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 
 public class StartMenu {
+
     public static void displayStartMenu(GameManager gameManager) {
         // Get the screen dimensions
         int screenWidth = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
@@ -45,7 +46,6 @@ public class StartMenu {
         GraphicsText label = new GraphicsText(text);
         label.setCenter(x, y - textHeight - startCanvas.getHeight() / 200); // Adjust the vertical position proportionally
         label.setFontSize(startCanvas.getHeight() / 25); // Adjust the font size proportionally
-
         startCanvas.add(buttonShape);
         startCanvas.add(buttonText);
         startCanvas.add(label);
@@ -56,11 +56,12 @@ public class StartMenu {
 
             if (clickX >= buttonShape.getX() && clickX <= buttonShape.getX() + buttonShape.getWidth() &&
                     clickY >= buttonShape.getY() && clickY <= buttonShape.getY() + buttonShape.getHeight()) {
-                // Click was inside the button, perform the action
-                gameManager.startGame(numPairs);
-
-                // Remove the difficulty selection canvas
                 startCanvas.closeWindow();
+                gameManager.createGameCanvas();
+                gameManager.cardGenerator(numPairs);
+                startCanvas.draw();
+
+        
             }
         });
     }
