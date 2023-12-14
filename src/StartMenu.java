@@ -1,6 +1,7 @@
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Rectangle;
+import edu.macalester.graphics.ui.Button;
 
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
@@ -8,61 +9,57 @@ import java.awt.GraphicsEnvironment;
 public class StartMenu {
 
     public static void displayStartMenu(GameManager gameManager) {
-        // Get the screen dimensions
-        int screenWidth = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
-        int screenHeight = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight();
-
         // Create the menuCanvas with screen dimensions
-        CanvasWindow menuCanvas = new CanvasWindow("Pokemon Card Game - Start Menu", screenWidth, screenHeight);
+        CanvasWindow menuCanvas = new CanvasWindow("Pokemon Card Game - Start Menu", 1200, 1000);
 
         // Title
         GraphicsText titleText = new GraphicsText("Pokemon Card Game");
-        titleText.setFontSize(screenHeight / 20); // Adjust the font size proportionally
+        titleText.setFontSize(menuCanvas.getHeight() / 20); // Adjust the font size proportionally
         titleText.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() / 4);
         menuCanvas.add(titleText);
 
         // Instruction
         GraphicsText instructionText = new GraphicsText("Choose difficulty:");
-        instructionText.setFontSize(screenHeight / 25); // Adjust the font size proportionally
-        instructionText.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() / 2);
+        instructionText.setFontSize(menuCanvas.getHeight()  / 25); // Adjust the font size proportionally
+        instructionText.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() /4 + 100);
         menuCanvas.add(instructionText);
 
+        // Easy
+        GraphicsText easy = new GraphicsText("Easy");
+        easy.setFontSize(menuCanvas.getHeight()  / 30); // Adjust the font size proportionally
+        easy.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1/4 + 170);
+        menuCanvas.add(easy);
+
+         // Medium
+        GraphicsText medium = new GraphicsText("Medium");
+        medium.setFontSize(menuCanvas.getHeight()  / 30); // Adjust the font size proportionally
+        medium.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1/2 + 50);
+        menuCanvas.add(medium);
+
+        // Difficult
+        GraphicsText difficult = new GraphicsText("Difficult");
+        difficult.setFontSize(menuCanvas.getHeight()  / 30); // Adjust the font size proportionally
+        difficult.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1/2 + 150);
+        menuCanvas.add(difficult);
+
+
         // Buttons
-        addDifficultyButton(menuCanvas, "Easy (5 Pairs)", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 3 / 4, 5, gameManager);
-        addDifficultyButton(menuCanvas, "Medium (10 Pairs)", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 4 / 5, 10, gameManager);
-        addDifficultyButton(menuCanvas, "Hard (15 Pairs)", menuCanvas.getWidth() / 2, menuCanvas.getHeight() - screenHeight / 40, 15, gameManager);
+        addDifficultyButton(menuCanvas, "5 Pairs", menuCanvas.getWidth() / 2 , menuCanvas.getHeight() * 1/4 + 200, 5, gameManager);
+        addDifficultyButton(menuCanvas, "10 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1/2 + 90, 10, gameManager);
+        addDifficultyButton(menuCanvas, "15 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1/2 + 180, 15, gameManager);
     }
 
     private static void addDifficultyButton(CanvasWindow startCanvas, String text, double x, double y, int numPairs, GameManager gameManager) {
-        GraphicsText buttonText = new GraphicsText(text);
-        buttonText.setFontSize(startCanvas.getHeight() / 25); // Adjust the font size proportionally
-        double textWidth = buttonText.getBounds().getWidth();
-        double textHeight = buttonText.getBounds().getHeight();
+        Button button = new Button(text);
+        button.setCenter(x, y);
+        startCanvas.add(button);
 
-        Rectangle buttonShape = new Rectangle(x - textWidth / 2, y - textHeight / 2, textWidth, textHeight);
-        buttonShape.setFillColor(Color.LIGHT_GRAY);
-        buttonShape.setStrokeColor(Color.BLACK);
 
-        GraphicsText label = new GraphicsText(text);
-        label.setCenter(x, y - textHeight - startCanvas.getHeight() / 200); // Adjust the vertical position proportionally
-        label.setFontSize(startCanvas.getHeight() / 25); // Adjust the font size proportionally
-        startCanvas.add(buttonShape);
-        startCanvas.add(buttonText);
-        startCanvas.add(label);
-
-        startCanvas.onClick(event -> {
-            double clickX = event.getPosition().getX();
-            double clickY = event.getPosition().getY();
-
-            if (clickX >= buttonShape.getX() && clickX <= buttonShape.getX() + buttonShape.getWidth() &&
-                    clickY >= buttonShape.getY() && clickY <= buttonShape.getY() + buttonShape.getHeight()) {
+        button.onClick(() -> {
                 startCanvas.closeWindow();
                 gameManager.createGameCanvas();
                 gameManager.cardGenerator(numPairs);
                 startCanvas.draw();
-
-        
-            }
-        });
+            });
     }
 }

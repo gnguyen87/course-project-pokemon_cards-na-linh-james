@@ -6,7 +6,6 @@ public class PokemonCardGame {
         game.run();
     }
 
-
     // This method will be called when a difficulty is chosen
     public void run() {
         GameManager gameManager = new GameManager();
