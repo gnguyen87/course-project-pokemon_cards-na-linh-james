@@ -9,7 +9,6 @@ import java.awt.GraphicsEnvironment;
 public class StartMenu {
 
     public static void displayStartMenu(GameManager gameManager) {
-        // Create the menuCanvas with screen dimensions
         CanvasWindow menuCanvas = new CanvasWindow("Pokemon Card Game - Start Menu", 1200, 1000);
 
         // Title

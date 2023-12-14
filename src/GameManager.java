@@ -23,8 +23,6 @@ public class GameManager {
     private GraphicsGroup timerGroup;
 
     private int attemptsCount = 30;
-    // private final int MAX_ATTEMPTS = 50; // Update the maximum attempts
-    // private int current_attempts = 50; // Update the maximum attempts
 
     private GraphicsText attemptsText;
     private GraphicsText gameOverText;
@@ -40,6 +38,10 @@ public class GameManager {
     public void startGame(){
         createGameCanvas();
     }
+
+    /**
+     * Create the Game Canvas for each level
+     */
 
     public void createGameCanvas(){
         canvas = new CanvasWindow("Pokemon Card Puzzle", 1200, 1000);
@@ -67,11 +69,12 @@ public class GameManager {
         winningImage.setMaxHeight(canvas.getHeight());
         winningImage.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 2);
 
-        drawTimerBar();
         startTimer();
     }
 
-
+    /**
+     * 
+     */
     public void cardGenerator(int numPairs) {
         int numberOfCards = numPairs * 2;
     

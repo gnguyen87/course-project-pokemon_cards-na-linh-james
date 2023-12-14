@@ -1,4 +1,3 @@
-
 public class PokemonCardGame {
 
     public static void main(String[] args) {
