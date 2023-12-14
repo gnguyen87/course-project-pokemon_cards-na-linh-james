@@ -43,12 +43,12 @@ public class StartMenu {
 
 
         // Buttons
-        addDifficultyButton(menuCanvas, "5 Pairs", menuCanvas.getWidth() / 2 , menuCanvas.getHeight() * 1/4 + 200, 5, gameManager);
-        addDifficultyButton(menuCanvas, "10 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1/2 + 90, 10, gameManager);
-        addDifficultyButton(menuCanvas, "15 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1/2 + 180, 15, gameManager);
+        addDifficultyButton(menuCanvas, "5 Pairs", menuCanvas.getWidth() / 2 , menuCanvas.getHeight() * 1/4 + 200, 5, 10, gameManager);
+        addDifficultyButton(menuCanvas, "10 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1/2 + 90, 10, 20, gameManager);
+        addDifficultyButton(menuCanvas, "15 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1/2 + 180, 15, 30, gameManager);
     }
 
-    private static void addDifficultyButton(CanvasWindow startCanvas, String text, double x, double y, int numPairs, GameManager gameManager) {
+    private static void addDifficultyButton(CanvasWindow startCanvas, String text, double x, double y, int numPairs, int numAttempts, GameManager gameManager) {
         Button button = new Button(text);
         button.setCenter(x, y);
         startCanvas.add(button);
@@ -56,6 +56,7 @@ public class StartMenu {
 
         button.onClick(() -> {
                 startCanvas.closeWindow();
+                gameManager.setAttempts(numAttempts);
                 gameManager.createGameCanvas();
                 gameManager.cardGenerator(numPairs);
                 startCanvas.draw();

@@ -10,8 +10,6 @@ import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
 
-
-
 public class GameManager {
     private CanvasWindow canvas;
 
@@ -22,7 +20,7 @@ public class GameManager {
     private int remainingTimeInSeconds = 5 * 60; // 5 minutes in seconds
     private GraphicsGroup timerGroup;
 
-    private int attemptsCount = 30;
+    private int attemptsCount;
 
     private GraphicsText attemptsText;
     private GraphicsText gameOverText;
@@ -40,9 +38,17 @@ public class GameManager {
     }
 
     /**
+     * Set number of attempts based on difficulty level
+     * @param numAttempts
+     * @return attempts' count that corresponds to the chosen game level.
+     */
+    public int setAttempts(int numAttempts) {
+        return this.attemptsCount = numAttempts;
+    }
+
+    /**
      * Create the Game Canvas for each level
      */
-
     public void createGameCanvas(){
         canvas = new CanvasWindow("Pokemon Card Puzzle", 1200, 1000);
         attemptsText = new GraphicsText("Attempts: " + attemptsCount);
