@@ -68,7 +68,6 @@ public class GameManager {
         winningImage.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 2);
 
         drawTimerBar();
-        addTimerPokemon();
         startTimer();
     }
 
