@@ -10,6 +10,10 @@ import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 public class GameManager {
     private CanvasWindow canvas;
 
@@ -33,7 +37,7 @@ public class GameManager {
     private Image timerPokemon;
     private Image pokeball;
 
-    public void startGame(){
+    public void startGame() {
         createGameCanvas();
     }
 
@@ -49,7 +53,12 @@ public class GameManager {
     /**
      * Create the Game Canvas for each level
      */
+<<<<<<< Updated upstream
     public void createGameCanvas(){
+=======
+
+    public void createGameCanvas() {
+>>>>>>> Stashed changes
         canvas = new CanvasWindow("Pokemon Card Puzzle", 1200, 1000);
         attemptsText = new GraphicsText("Attempts: " + attemptsCount);
         attemptsText.setFontSize(20);
@@ -79,20 +88,22 @@ public class GameManager {
     }
 
     /**
+     * Generate the pokemon cards depending on the difficulty level
      * 
+     * @param int numPairs: number of Pairs
      */
     public void cardGenerator(int numPairs) {
         int numberOfCards = numPairs * 2;
-    
+
         File files = new File("res/pokemon_images");
-    
+
         List<String> pokemonImages = pokemonImageStrings(files.listFiles());
-    
+
         // Shuffle and select a subset of unique Pokemon images
         List<String> selectedImages = new ArrayList<>(pokemonImages.subList(0, numPairs));
         selectedImages.addAll(selectedImages); // Duplicate to create pairs
         Collections.shuffle(selectedImages);
-    
+
         double centerX = canvas.getWidth() * 0.15;
         double centerY = canvas.getHeight() * 0.03;
 
@@ -113,17 +124,17 @@ public class GameManager {
             numRows = 4;
             numCols = 4;
         }
-    
+
         for (int i = 0; i < numberOfCards; i++) {
             Pokemon pokemon = new Pokemon("pokemon_images/" + selectedImages.get(i) + ".png");
             PokemonCard card = new PokemonCard(centerX, centerY, false, pokemon);
             cards.add(card);
-    
+
             card.addToCanvas(canvas);
             canvas.onClick(event -> card.flipCard(event.getPosition(), this));
-    
+
             centerX += card.CARD_WIDTH + DISTANCE;
-    
+
             if (i % numCols == numCols - 1) {
                 centerX = canvas.getWidth() * 0.15;
                 centerY += card.CARD_HEIGHT + DISTANCE * 0.5;
@@ -135,23 +146,38 @@ public class GameManager {
         }
     }
 
+
+    /**
+     * Display an image when the user wins
+     */
     private void displayWinningImage() {
-        canvas.removeAll(); 
+        canvas.removeAll();
         canvas.add(winningImage);
     }
-    
-    
 
+    /**
+     * Display an image when the user loses
+     */
+    private void updateGameOverDisplay() {
+        canvas.removeAll();
+        canvas.add(gameOverImage);
+    }
+
+
+    /**
+     * Read in all pokemon images file and add it to a list of strings
+     * @param File[] files: List of image files (the pokemon images folder)
+     */
     private List<String> pokemonImageStrings(File[] files) {
         List<String> pokemonImages = new ArrayList<>();
-        for (File imageFile: files) {
+        for (File imageFile : files) {
             String imageName = imageFile.getName(); // Get the file name
             String pokemonName = imageName.substring(0, imageName.lastIndexOf('.')); // Remove file extension
             pokemonImages.add(pokemonName);
         }
         return pokemonImages;
     }
-
+    
     public void removeCard(PokemonCard card) {
         canvas.remove(card.getGraphicsGroup());
         cards.remove(card);
@@ -172,8 +198,11 @@ public class GameManager {
     public void updateCanvas() {
         canvas.draw();
     }
-    
-    private void drawTimerBar(){
+
+    /**
+     * Draw the time bar
+     */
+    private void drawTimerBar() {
         timerBarOutline = new Rectangle(70, 170, 40, 550);
         timerBarOutline.setStrokeWidth(2.5);
         timerBarOutline.setStrokeColor(Color.BLACK);
@@ -185,7 +214,9 @@ public class GameManager {
         canvas.add(timerBar);
     }
 
-    // // trying to make a cute pokemon near the timer
+    /**
+     * Add pokemon icon to guide how much time is left
+     */
     private void addTimerPokemon() {
         timerPokemon = new Image("pokemon_images/evie.png");
         timerPokemon.setMaxHeight(120);
@@ -194,13 +225,15 @@ public class GameManager {
         canvas.add(timerPokemon);
     }
 
-
+     /**
+     * Start timer by adding in all graphic components and utilizing the Thread class
+     */
     private void startTimer() {
         timerGroup = new GraphicsGroup();
         canvas.add(timerGroup);
         drawTimerBar();
         addTimerPokemon();
-        
+
         Thread timerThread = new Thread(() -> {
             while (remainingTimeInSeconds > 0) {
                 updateTimerDisplay();
@@ -209,20 +242,18 @@ public class GameManager {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                remainingTimeInSeconds--;        
-            } 
+                remainingTimeInSeconds--;
+            }
             // Game over logic can be added here
             if (remainingTimeInSeconds <= 0) {
-                    canvas.removeAll();
-                    canvas.add(gameOverImage);
-            } 
-            else {
-                    attemptsText.setText("Attempts: " + attemptsCount);
-                    updateCanvas();
+                canvas.removeAll();
+                canvas.add(gameOverImage);
+            } else {
+                attemptsText.setText("Attempts: " + attemptsCount);
+                updateCanvas();
             }
-        }
-        );
-            
+        });
+
 
         timerThread.start();
     }
@@ -259,7 +290,7 @@ public class GameManager {
 
     public void AttemptsCount() {
         attemptsCount--;
-    
+
         if (attemptsCount <= 0) {
             canvas.removeAll();
             updateGameOverDisplay();
@@ -269,25 +300,21 @@ public class GameManager {
         }
     }
 
-    private void updateGameOverDisplay() {
-        canvas.removeAll();
-        canvas.add(gameOverImage);
-    }
 
     public void ringPokeBall() {
         double initialY = pokeball.getCenter().getY();
-        double distance = 5; 
-        double duration = 1000; 
+        double distance = 5;
+        double duration = 1000;
         long startTime = System.currentTimeMillis();
-    
+
         Thread pokeballAnimation = new Thread(() -> {
             while (System.currentTimeMillis() - startTime < duration) {
                 double timeElapsed = System.currentTimeMillis() - startTime;
                 double newY = initialY + distance * Math.sin((timeElapsed / duration) * Math.PI * 2);
-                
+
                 // Update the Pokeball position
                 pokeball.setCenter(pokeball.getCenter().getX(), newY);
-                
+
                 canvas.draw();
             }
 
@@ -295,11 +322,10 @@ public class GameManager {
             pokeball.setCenter(pokeball.getCenter().getX(), initialY);
             canvas.draw();
         });
-    
+
         pokeballAnimation.start();
     }
-    
-       
-}
 
+
+}
 
