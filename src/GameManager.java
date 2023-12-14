@@ -10,10 +10,7 @@ import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 public class GameManager {
     private CanvasWindow canvas;
 
@@ -53,12 +50,7 @@ public class GameManager {
     /**
      * Create the Game Canvas for each level
      */
-<<<<<<< Updated upstream
     public void createGameCanvas(){
-=======
-
-    public void createGameCanvas() {
->>>>>>> Stashed changes
         canvas = new CanvasWindow("Pokemon Card Puzzle", 1200, 1000);
         attemptsText = new GraphicsText("Attempts: " + attemptsCount);
         attemptsText.setFontSize(20);
@@ -258,6 +250,9 @@ public class GameManager {
         timerThread.start();
     }
 
+    /**
+     * Start timer by adding in all graphic components and utilizing the Thread class
+     */
     private void updateTimerDisplay() {
         int minutes = remainingTimeInSeconds / 60;
         int seconds = remainingTimeInSeconds % 60;
@@ -288,6 +283,9 @@ public class GameManager {
         timerGroup.setCenter(70, 50);
     }
 
+     /**
+     * Update the number of attempts 
+     */
     public void AttemptsCount() {
         attemptsCount--;
 
@@ -300,7 +298,9 @@ public class GameManager {
         }
     }
 
-
+    /**
+     * Ring the pokeball when there is a valid match 
+     */
     public void ringPokeBall() {
         double initialY = pokeball.getCenter().getY();
         double distance = 5;
