@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
@@ -6,8 +7,10 @@ import java.util.List;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
+import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 
 
@@ -17,8 +20,10 @@ public class GameManager {
     private List<PokemonCard> cards = new ArrayList<>();
     private PokemonCard firstFlipped;
 
+    private Thread timeThread;
     private final double DISTANCE = 20;
     private int remainingTimeInSeconds = 5 * 60; // 5 minutes in seconds
+    private int currentnumPairs;
     private GraphicsGroup timerGroup;
 
     private int attemptsCount;
@@ -34,7 +39,8 @@ public class GameManager {
     
     private Image timerPokemon;
     private Image pokeball;
-    private Image redoButton;
+    public Image redoButton;
+
 
     public void startGame() {
         createGameCanvas();
@@ -85,8 +91,9 @@ public class GameManager {
         redoButton.setCenter(canvas.getWidth() - 150, 450);
         canvas.add(redoButton);
 
-
-        startTimer();
+        canvas.onClick(event -> redoGame(event.getPosition()));
+        
+        // canvas.onClick(event -> redoGame(event.getPosition()));
     }
 
     /**
@@ -166,6 +173,7 @@ public class GameManager {
     }
 
 
+
     /**
      * Read in all pokemon images file and add it to a list of strings
      * @param File[] files: List of image files (the pokemon images folder)
@@ -201,6 +209,18 @@ public class GameManager {
         canvas.draw();
     }
 
+    public CanvasWindow getCanvas() {
+        return canvas;
+    }
+
+    private int getCardNum(){
+        return currentnumPairs;
+    }
+    
+    public void setCardNum(int numPairs){
+        currentnumPairs = numPairs;
+    }
+
     /**
      * Draw the time bar
      */
@@ -227,26 +247,25 @@ public class GameManager {
         canvas.add(timerPokemon);
     }
 
-     /**
-     * Start timer by adding in all graphic components and utilizing the Thread class
+    /**
+     * Start timer for the game and add all timer graphics
      */
-    private void startTimer() {
+    public void startTimer() {
+        cancelTimer();
         timerGroup = new GraphicsGroup();
         canvas.add(timerGroup);
         drawTimerBar();
         addTimerPokemon();
-
-        Thread timerThread = new Thread(() -> {
-            while (remainingTimeInSeconds > 0) {
+        timeThread = new Thread(() -> {
+            while (remainingTimeInSeconds > 0 && !Thread.currentThread().isInterrupted()) {
                 updateTimerDisplay();
                 try {
-                    Thread.sleep(1000); // Sleep for 1 second
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
                 remainingTimeInSeconds--;
             }
-            // Game over logic can be added here
             if (remainingTimeInSeconds <= 0) {
                 canvas.removeAll();
                 canvas.add(gameOverImage);
@@ -255,10 +274,23 @@ public class GameManager {
                 updateCanvas();
             }
         });
-
-
-        timerThread.start();
+        timeThread.start();
     }
+
+    /**
+     * Cancel the current timer thread
+     */
+    private void cancelTimer() {
+        if (timeThread != null && timeThread.isAlive()) {
+            timeThread.interrupt(); // Interrupt the current timer thread
+            timeThread = null; // Set the thread to null
+        }
+    }
+
+    private void setRemainingTime() {
+        remainingTimeInSeconds = 5 * 60;
+    }
+
 
     /**
      * Start timer by adding in all graphic components and utilizing the Thread class
@@ -335,6 +367,48 @@ public class GameManager {
 
         pokeballAnimation.start();
     }
+
+    public void redoGame(Point userPoint) {
+        GraphicsObject obj = canvas.getElementAt(userPoint);
+        if (obj == redoButton) {
+            System.out.println("Redo button clicked!");
+            canvas.removeAll();
+            canvas.closeWindow(); // Clear the canvas content
+            cancelTimer();
+            setRemainingTime();
+            createGameCanvas(); // Recreate the game components
+            cardGenerator(getCardNum());
+            startTimer();
+        }
+    }
+
+
+
+    
+    
+    // private void promptUserForRedoConfirmation() {
+    //     CanvasWindow cfScreen = new CanvasWindow("Are you sure?", canvas.getWidth() / 5, canvas.getHeight() / 5);
+    //     Button yes = new Button("YES");
+    //     Button no = new Button("NO");
+    
+    //     yes.onClick(() -> {
+    //         cfScreen.closeWindow();
+    //         redoConfirmed();
+    //     });
+    
+    //     no.onClick(() -> {
+    //         cfScreen.closeWindow();
+    //     });
+    // }
+    
+    // private void redoConfirmed() {
+    //     if (userAns) {
+    //         canvas.removeAll();
+    //         createGameCanvas();
+    //     }
+    // }
+   
+    
 
 
 }

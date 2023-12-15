@@ -1,12 +1,15 @@
 public class PokemonCardGame {
+    private GameManager gm  = new GameManager();
+
 
     public static void main(String[] args) {
         PokemonCardGame game = new PokemonCardGame();
         game.run();
     }
-    
+
     public void run() {
-        GameManager gameManager = new GameManager();
-        StartMenu.displayStartMenu(gameManager);
+        StartMenu.displayStartMenu(gm);
     }
+
+
 }

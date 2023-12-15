@@ -59,7 +59,10 @@ public class StartMenu {
                 gameManager.setAttempts(numAttempts);
                 gameManager.createGameCanvas();
                 gameManager.cardGenerator(numPairs);
+                gameManager.startTimer();
+                gameManager.setCardNum(numPairs);
                 startCanvas.draw();
             });
     }
+
 }
