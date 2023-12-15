@@ -106,7 +106,6 @@ public class GameManager {
 
     /**
      * Generate the pokemon cards depending on the difficulty level
-     * 
      * @param int numPairs: number of Pairs
      */
     public void cardGenerator(int numPairs) {
@@ -184,6 +183,7 @@ public class GameManager {
 
     /**
      * Read in all pokemon images file and add it to a list of strings
+     * Source: https://intellipaat.com/community/38545/how-do-i-iterate-through-the-files-in-a-directory-in-java#:~:text=1%20Answer&text=You%20can%20use%20File%23isDirectory,This%20is%20called%20recursion.
      * @param File[] files: List of image files (the pokemon images folder)
      */
     private List<String> pokemonImageStrings(File[] files) {
@@ -257,6 +257,8 @@ public class GameManager {
 
     /**
      * Start timer for the game and add all timer graphics
+     * Source: https://chat.openai.com 
+     * (Prompt: "how to add a timer that counts down 5 minutes on the screen the moment the game runs" )
      */
     public void startTimer() {
         cancelTimer();
@@ -353,6 +355,8 @@ public class GameManager {
 
     /**
      * Ring the pokeball when there is a valid match 
+     * Source: https://chat.openai.com
+     * (Prompt: "How to move an image from side to side for a period of time?")
      */
     public void ringPokeBall() {
         double initialY = pokeball.getCenter().getY();
@@ -397,7 +401,6 @@ public class GameManager {
         }
     }
 
-    
     private void promptUserForRedoConfirmation() {
         CanvasWindow cfScreen = new CanvasWindow("ARE YOU SURE YOU WANT TO RETRY?", canvas.getWidth() / 3, canvas.getHeight() / 12);
 
