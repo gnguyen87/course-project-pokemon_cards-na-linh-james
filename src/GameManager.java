@@ -34,7 +34,9 @@ public class GameManager {
     
     private Image timerPokemon;
     private Image pokeball;
-    public Image redoButton;
+    private Image redoButton;
+    private Image pauseButton;
+
 
     private boolean isPaused = false;
     private long startPauseTime; // Variable to track start time of pause
@@ -90,8 +92,14 @@ public class GameManager {
         canvas.add(redoButton);
 
         canvas.onClick(event -> redoGame(event.getPosition()));
+
+        pauseButton = new Image("buttons/pause_button.png");
+        pauseButton.setMaxHeight(150);
+        pauseButton.setMaxWidth(150);
+        pauseButton.setCenter(canvas.getWidth() - 150, 600);
+        canvas.add(pauseButton);
         
-        // canvas.onClick(event -> redoGame(event.getPosition()));
+      
     }
 
     /**
