@@ -34,6 +34,9 @@ public class GameManager {
     private Image timerPokemon;
     private Image pokeball;
 
+    int numberOfCardsOnScreen = cards.size();
+
+
     public void startGame() {
         createGameCanvas();
     }
@@ -64,17 +67,18 @@ public class GameManager {
         gameOverImage = new Image("game_over/poke_game_over.png");
         gameOverImage.setMaxWidth(canvas.getWidth());
         gameOverImage.setMaxHeight(canvas.getHeight());
-        gameOverImage.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 2);
+        gameOverImage.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 3);
 
         pokeball = new Image("pokeball.png");
         pokeball.setMaxHeight(100);
         pokeball.setMaxWidth(100);
         pokeball.setCenter(canvas.getWidth() - 100, 150);
         canvas.add(pokeball);
-        winningImage = new Image("game_over/poke_game_over.png");
+
+        winningImage = new Image("game_over/poke_lover.jpg");
         winningImage.setMaxWidth(canvas.getWidth());
         winningImage.setMaxHeight(canvas.getHeight());
-        winningImage.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 2);
+        winningImage.setCenter(canvas.getWidth() / 2, canvas.getHeight() /3);
 
         startTimer();
     }
@@ -133,10 +137,8 @@ public class GameManager {
             }
         }
 
-        if (cards.isEmpty()) {
-            displayWinningImage();
         }
-    }
+    
 
 
     /**
@@ -144,6 +146,11 @@ public class GameManager {
      */
     private void displayWinningImage() {
         canvas.removeAll();
+        winningImage.setMaxWidth(canvas.getWidth());
+        winningImage.setMaxHeight(canvas.getHeight());
+    
+        canvas.add(winningImage);
+    
         canvas.add(winningImage);
     }
 
@@ -173,6 +180,7 @@ public class GameManager {
     public void removeCard(PokemonCard card) {
         canvas.remove(card.getGraphicsGroup());
         cards.remove(card);
+        gameWin();
     }
 
     public PokemonCard getFirstFlipped() {
@@ -326,6 +334,29 @@ public class GameManager {
         pokeballAnimation.start();
     }
 
+    // /**
+    //  * Checks if the board is empty
+    //  */
+    // public boolean boardEmpty(){
+    //     return cards.isEmpty();
+    // }
+
+
+
+    /**
+     * Ends the game with a victory
+     */
+    public void gameWin() {
+        if (cards.isEmpty()) {
+            displayWinningImage();
+        }
+    }
 
 }
+
+    
+
+
+
+
 
