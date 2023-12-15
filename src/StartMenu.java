@@ -1,10 +1,7 @@
-import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.GraphicsText;
-import edu.macalester.graphics.Rectangle;
+
+import edu.macalester.graphics.*;
 import edu.macalester.graphics.ui.Button;
 
-import java.awt.Color;
-import java.awt.GraphicsEnvironment;
 
 public class StartMenu {
 

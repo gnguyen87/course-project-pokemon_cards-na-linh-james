@@ -5,13 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.GraphicsObject;
-import edu.macalester.graphics.GraphicsText;
-import edu.macalester.graphics.Image;
-import edu.macalester.graphics.Point;
-import edu.macalester.graphics.Rectangle;
+import edu.macalester.graphics.*;
+import edu.macalester.graphics.ui.Button;
 
 
 public class GameManager {
@@ -40,6 +35,9 @@ public class GameManager {
     private Image timerPokemon;
     private Image pokeball;
     public Image redoButton;
+
+    private boolean isPaused = false;
+    private long startTime = 0; // Variable to track start time of pause
 
 
     public void startGame() {
@@ -256,9 +254,13 @@ public class GameManager {
         canvas.add(timerGroup);
         drawTimerBar();
         addTimerPokemon();
+        startTime = System.currentTimeMillis(); // Record the start time
+
         timeThread = new Thread(() -> {
             while (remainingTimeInSeconds > 0 && !Thread.currentThread().isInterrupted()) {
-                updateTimerDisplay();
+                if (!isPaused) {
+                    updateTimerDisplay();
+                }
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -371,42 +373,63 @@ public class GameManager {
     public void redoGame(Point userPoint) {
         GraphicsObject obj = canvas.getElementAt(userPoint);
         if (obj == redoButton) {
-            System.out.println("Redo button clicked!");
-            canvas.removeAll();
-            canvas.closeWindow(); // Clear the canvas content
-            cancelTimer();
-            setRemainingTime();
-            createGameCanvas(); // Recreate the game components
-            cardGenerator(getCardNum());
-            startTimer();
+            pauseTimer();
+            promptUserForRedoConfirmation();
+            
         }
+    }
+
+    
+    private void promptUserForRedoConfirmation() {
+        CanvasWindow cfScreen = new CanvasWindow("ARE YOU SURE YOU WANT TO RETRY?", canvas.getWidth() / 3, canvas.getHeight() / 12);
+
+        Button yes = new Button("YES");
+        cfScreen.add(yes);
+        yes.setCenter(cfScreen.getWidth() * 0.3, cfScreen.getHeight()*2/3);
+
+        Button no = new Button("NO");
+        cfScreen.add(no);
+        no.setCenter(cfScreen.getWidth() * 0.7, cfScreen.getHeight()*2/3);
+    
+        yes.onClick(() -> {
+            cfScreen.closeWindow();
+            restartCurrentGame();
+        });
+    
+        no.onClick(() -> {
+            cfScreen.closeWindow();
+            resumeTimer();
+        });
+    }
+    
+    private void restartCurrentGame() {
+        canvas.removeAll();
+        canvas.closeWindow(); // Clear the canvas content
+        cancelTimer();
+        setRemainingTime();
+        createGameCanvas(); // Recreate the game components
+        cardGenerator(getCardNum());
+        isPaused = false;
+        startTimer();
+        
+    }
+
+   
+    public void pauseTimer() {
+        isPaused = true;
+        startTime = System.currentTimeMillis(); // Record the pause time
+    }
+
+    public void resumeTimer() {
+        isPaused = false;
+        long pauseDuration = System.currentTimeMillis() - startTime;
+        remainingTimeInSeconds += (int) (pauseDuration / 1000); 
+        startTime = System.currentTimeMillis() - pauseDuration; 
     }
 
 
 
-    
-    
-    // private void promptUserForRedoConfirmation() {
-    //     CanvasWindow cfScreen = new CanvasWindow("Are you sure?", canvas.getWidth() / 5, canvas.getHeight() / 5);
-    //     Button yes = new Button("YES");
-    //     Button no = new Button("NO");
-    
-    //     yes.onClick(() -> {
-    //         cfScreen.closeWindow();
-    //         redoConfirmed();
-    //     });
-    
-    //     no.onClick(() -> {
-    //         cfScreen.closeWindow();
-    //     });
-    // }
-    
-    // private void redoConfirmed() {
-    //     if (userAns) {
-    //         canvas.removeAll();
-    //         createGameCanvas();
-    //     }
-    // }
+
    
     
 
