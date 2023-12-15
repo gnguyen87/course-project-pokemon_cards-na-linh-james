@@ -36,6 +36,7 @@ public class GameManager {
     private Image pokeball;
     private Image redoButton;
     private Image pauseButton;
+    private Image homeButton;
 
 
     private boolean isPaused = false;
@@ -101,6 +102,14 @@ public class GameManager {
         canvas.add(pauseButton);
 
         canvas.onClick(event -> pauseGame(event.getPosition()));
+
+        homeButton = new Image("buttons/home_button.png");
+        homeButton.setMaxHeight(130);
+        homeButton.setMaxWidth(130);
+        homeButton.setCenter(canvas.getWidth() - 120, 750);
+        canvas.add(homeButton);
+
+
 
 
     }
