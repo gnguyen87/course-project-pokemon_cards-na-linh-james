@@ -98,6 +98,8 @@ public class GameManager {
         pauseButton.setMaxWidth(150);
         pauseButton.setCenter(canvas.getWidth() - 150, 600);
         canvas.add(pauseButton);
+
+        canvas.onClick(event -> pauseGame(event.getPosition()));
         
       
     }
@@ -377,11 +379,20 @@ public class GameManager {
         pokeballAnimation.start();
     }
 
-    public void redoGame(Point userPoint) {
+    private void redoGame(Point userPoint) {
         GraphicsObject obj = canvas.getElementAt(userPoint);
         if (obj == redoButton) {
             pauseTimer();
             promptUserForRedoConfirmation();
+            
+        }
+    }
+
+     public void pauseGame(Point userPoint) {
+        GraphicsObject obj = canvas.getElementAt(userPoint);
+        if (obj == pauseButton) {
+            pauseTimer();
+            promptUserForResumeConfirmation();
             
         }
     }
@@ -407,6 +418,20 @@ public class GameManager {
             cfScreen.closeWindow();
             resumeTimer();
         });
+    }
+
+      private void promptUserForResumeConfirmation() {
+        CanvasWindow cfScreen = new CanvasWindow("GAME IS PAUSED", canvas.getWidth() / 3, canvas.getHeight() / 12);
+
+        Button resume = new Button("RESUME GAME");
+        cfScreen.add(resume);
+        resume.setCenter(cfScreen.getWidth() * 0.5, cfScreen.getHeight() * 0.5);
+
+        resume.onClick(() -> {
+            cfScreen.closeWindow();
+            resumeTimer();
+        });
+    
     }
     
     private void restartCurrentGame() {
