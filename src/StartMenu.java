@@ -16,50 +16,61 @@ public class StartMenu {
 
         // Instruction
         GraphicsText instructionText = new GraphicsText("Choose difficulty:");
-        instructionText.setFontSize(menuCanvas.getHeight()  / 25); // Adjust the font size proportionally
-        instructionText.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() /4 + 100);
+        instructionText.setFontSize(menuCanvas.getHeight() / 25); // Adjust the font size proportionally
+        instructionText.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() / 4 + 100);
         menuCanvas.add(instructionText);
 
         // Easy
         GraphicsText easy = new GraphicsText("Easy");
-        easy.setFontSize(menuCanvas.getHeight()  / 30); // Adjust the font size proportionally
-        easy.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1/4 + 170);
+        easy.setFontSize(menuCanvas.getHeight() / 30); // Adjust the font size proportionally
+        easy.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1 / 4 + 170);
         menuCanvas.add(easy);
 
-         // Medium
+        // Medium
         GraphicsText medium = new GraphicsText("Medium");
-        medium.setFontSize(menuCanvas.getHeight()  / 30); // Adjust the font size proportionally
-        medium.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1/2 + 50);
+        medium.setFontSize(menuCanvas.getHeight() / 30); // Adjust the font size proportionally
+        medium.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1 / 2 + 50);
         menuCanvas.add(medium);
 
         // Difficult
         GraphicsText difficult = new GraphicsText("Difficult");
-        difficult.setFontSize(menuCanvas.getHeight()  / 30); // Adjust the font size proportionally
-        difficult.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1/2 + 150);
+        difficult.setFontSize(menuCanvas.getHeight() / 30); // Adjust the font size proportionally
+        difficult.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1 / 2 + 150);
         menuCanvas.add(difficult);
 
 
         // Buttons
-        addDifficultyButton(menuCanvas, "5 Pairs", menuCanvas.getWidth() / 2 , menuCanvas.getHeight() * 1/4 + 200, 5, 10, gameManager);
-        addDifficultyButton(menuCanvas, "10 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1/2 + 90, 10, 20, gameManager);
-        addDifficultyButton(menuCanvas, "15 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1/2 + 180, 15, 30, gameManager);
+        addDifficultyButton(menuCanvas, "5 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1 / 4 + 200, 5,
+            10, gameManager);
+        addDifficultyButton(menuCanvas, "10 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1 / 2 + 90, 10,
+            20, gameManager);
+        addDifficultyButton(menuCanvas, "15 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1 / 2 + 180, 15,
+            30, gameManager);
     }
 
-    private static void addDifficultyButton(CanvasWindow startCanvas, String text, double x, double y, int numPairs, int numAttempts, GameManager gameManager) {
+    /**
+     * Generate a button for different levels If button is clicked, a game will be generated with the
+     * appropriate numbers of cards & attempts according to the chosen level
+     */
+    private static void addDifficultyButton(CanvasWindow startCanvas,
+                                        String text,
+                                        double x,
+                                        double y,
+                                        int numPairs,
+                                        int numAttempts,
+                                        GameManager gameManager) {
         Button button = new Button(text);
         button.setCenter(x, y);
         startCanvas.add(button);
-
-
         button.onClick(() -> {
-                startCanvas.closeWindow();
-                gameManager.setAttempts(numAttempts);
-                gameManager.createGameCanvas();
-                gameManager.cardGenerator(numPairs);
-                gameManager.startTimer();
-                gameManager.setCardNum(numPairs);
-                startCanvas.draw();
-            });
+            startCanvas.closeWindow();
+            gameManager.setAttempts(numAttempts);
+            gameManager.createGameCanvas();
+            gameManager.cardGenerator(numPairs);
+            gameManager.startTimer();
+            gameManager.setCardNum(numPairs);
+            startCanvas.draw();
+        });
     }
 
 }
