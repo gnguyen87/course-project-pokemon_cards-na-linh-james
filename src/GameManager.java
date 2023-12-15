@@ -65,7 +65,7 @@ public class GameManager {
         attemptsText.setFontSize(20);
         canvas.add(attemptsText);
 
-        attemptsText.setCenter(canvas.getWidth() - 150, 50);
+        attemptsText.setCenter(canvas.getWidth() - 120, 50);
         gameOverText = new GraphicsText("Game Over!");
         gameOverText.setFontSize(40);
         gameOverText.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 2);
@@ -78,7 +78,7 @@ public class GameManager {
         pokeball = new Image("pokeball.png");
         pokeball.setMaxHeight(100);
         pokeball.setMaxWidth(100);
-        pokeball.setCenter(canvas.getWidth() - 150, 150);
+        pokeball.setCenter(canvas.getWidth() - 120, 150);
         canvas.add(pokeball);
 
         winningImage = new Image("game_over/poke_game_over.png");
@@ -89,7 +89,7 @@ public class GameManager {
         redoButton = new Image("buttons/redo_button.png");
         redoButton.setMaxHeight(150);
         redoButton.setMaxWidth(150);
-        redoButton.setCenter(canvas.getWidth() - 150, 450);
+        redoButton.setCenter(canvas.getWidth() - 120, 450);
         canvas.add(redoButton);
 
         canvas.onClick(event -> redoGame(event.getPosition()));
@@ -97,7 +97,7 @@ public class GameManager {
         pauseButton = new Image("buttons/pause_button.png");
         pauseButton.setMaxHeight(150);
         pauseButton.setMaxWidth(150);
-        pauseButton.setCenter(canvas.getWidth() - 150, 600);
+        pauseButton.setCenter(canvas.getWidth() - 120, 600);
         canvas.add(pauseButton);
 
         canvas.onClick(event -> pauseGame(event.getPosition()));
