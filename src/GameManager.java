@@ -34,7 +34,7 @@ public class GameManager {
     
     private Image timerPokemon;
     private Image pokeball;
-    private Image retryButton;
+    private Image redoButton;
 
     public void startGame() {
         createGameCanvas();
@@ -79,11 +79,11 @@ public class GameManager {
         winningImage.setMaxHeight(canvas.getHeight());
         winningImage.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 2);
 
-        retryButton = new Image("buttons/redo_button.png");
-        retryButton.setMaxHeight(150);
-        retryButton.setMaxWidth(150);
-        retryButton.setCenter(canvas.getWidth() - 150, 450);
-        canvas.add(retryButton);
+        redoButton = new Image("buttons/redo_button.png");
+        redoButton.setMaxHeight(150);
+        redoButton.setMaxWidth(150);
+        redoButton.setCenter(canvas.getWidth() - 150, 450);
+        canvas.add(redoButton);
 
 
         startTimer();
