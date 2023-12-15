@@ -25,13 +25,13 @@ public class GameManager {
 
     private GraphicsText attemptsText;
     private GraphicsText gameOverText;
-    
+
     private Image gameOverImage;
     private Image winningImage;
 
     private Rectangle timerBarOutline;
     private Rectangle timerBar;
-    
+
     private Image timerPokemon;
     private Image pokeball;
     private Image redoButton;
@@ -48,6 +48,7 @@ public class GameManager {
 
     /**
      * Set number of attempts based on difficulty level
+     * 
      * @param numAttempts
      * @return attempts' count that corresponds to the chosen game level.
      */
@@ -58,7 +59,7 @@ public class GameManager {
     /**
      * Create the Game Canvas for each level
      */
-    public void createGameCanvas(){
+    public void createGameCanvas() {
         canvas = new CanvasWindow("Pokemon Card Puzzle", 1200, 1000);
         attemptsText = new GraphicsText("Attempts: " + attemptsCount);
         attemptsText.setFontSize(20);
@@ -100,12 +101,13 @@ public class GameManager {
         canvas.add(pauseButton);
 
         canvas.onClick(event -> pauseGame(event.getPosition()));
-        
-      
+
+
     }
 
     /**
      * Generate the pokemon cards depending on the difficulty level
+     * 
      * @param int numPairs: number of Pairs
      */
     public void cardGenerator(int numPairs) {
@@ -180,10 +182,10 @@ public class GameManager {
     }
 
 
-
     /**
-     * Read in all pokemon images file and add it to a list of strings
-     * Source: https://intellipaat.com/community/38545/how-do-i-iterate-through-the-files-in-a-directory-in-java#:~:text=1%20Answer&text=You%20can%20use%20File%23isDirectory,This%20is%20called%20recursion.
+     * Read in all pokemon images file and add it to a list of strings Source:
+     * https://intellipaat.com/community/38545/how-do-i-iterate-through-the-files-in-a-directory-in-java#:~:text=1%20Answer&text=You%20can%20use%20File%23isDirectory,This%20is%20called%20recursion.
+     * 
      * @param File[] files: List of image files (the pokemon images folder)
      */
     private List<String> pokemonImageStrings(File[] files) {
@@ -195,7 +197,7 @@ public class GameManager {
         }
         return pokemonImages;
     }
-    
+
     public void removeCard(PokemonCard card) {
         canvas.remove(card.getGraphicsGroup());
         cards.remove(card);
@@ -221,11 +223,11 @@ public class GameManager {
         return canvas;
     }
 
-    private int getCardNum(){
+    private int getCardNum() {
         return currentnumPairs;
     }
-    
-    public void setCardNum(int numPairs){
+
+    public void setCardNum(int numPairs) {
         currentnumPairs = numPairs;
     }
 
@@ -256,9 +258,8 @@ public class GameManager {
     }
 
     /**
-     * Start timer for the game and add all timer graphics
-     * Source: https://chat.openai.com 
-     * (Prompt: "how to add a timer that counts down 5 minutes on the screen the moment the game runs" )
+     * Start timer for the game and add all timer graphics Source: https://chat.openai.com (Prompt: "how
+     * to add a timer that counts down 5 minutes on the screen the moment the game runs" )
      */
     public void startTimer() {
         cancelTimer();
@@ -338,8 +339,8 @@ public class GameManager {
         timerGroup.setCenter(70, 50);
     }
 
-     /**
-     * Update the number of attempts 
+    /**
+     * Update the number of attempts
      */
     public void AttemptsCount() {
         attemptsCount--;
@@ -354,9 +355,8 @@ public class GameManager {
     }
 
     /**
-     * Ring the pokeball when there is a valid match 
-     * Source: https://chat.openai.com
-     * (Prompt: "How to move an image from side to side for a period of time?")
+     * Ring the pokeball when there is a valid match Source: https://chat.openai.com (Prompt: "How to
+     * move an image from side to side for a period of time?")
      */
     public void ringPokeBall() {
         double initialY = pokeball.getCenter().getY();
@@ -383,47 +383,68 @@ public class GameManager {
         pokeballAnimation.start();
     }
 
+     /**
+     * Carry out the tasks when user clicks on the redo button:
+     * 1) Pause timer
+     * 2) Pop up a screen to ask user confirmation
+     */
+
     private void redoGame(Point userPoint) {
         GraphicsObject obj = canvas.getElementAt(userPoint);
         if (obj == redoButton) {
             pauseTimer();
             promptUserForRedoConfirmation();
-            
+
         }
     }
 
-     public void pauseGame(Point userPoint) {
+
+    /**
+     * Carry out the tasks when user clicks on the pause button:
+     * 1) Pause timer
+     * 2) Pop up a screen to ask user confirmation
+     */
+    private void pauseGame(Point userPoint) {
         GraphicsObject obj = canvas.getElementAt(userPoint);
         if (obj == pauseButton) {
             pauseTimer();
             promptUserForResumeConfirmation();
-            
+
         }
     }
 
+    /**
+     * Generate a pop up screen with 2 buttons (Yes/No) to confirm whether user wants to redo the game
+     * If 'Yes' button is clicked, the game restarts to its current level
+     * If 'No' button is clicked, the game resumes to its current status
+     */
     private void promptUserForRedoConfirmation() {
-        CanvasWindow cfScreen = new CanvasWindow("ARE YOU SURE YOU WANT TO RETRY?", canvas.getWidth() / 3, canvas.getHeight() / 12);
+        CanvasWindow cfScreen = new CanvasWindow("ARE YOU SURE YOU WANT TO RETRY?", canvas.getWidth() / 3,
+            canvas.getHeight() / 12);
 
         Button yes = new Button("YES");
         cfScreen.add(yes);
-        yes.setCenter(cfScreen.getWidth() * 0.3, cfScreen.getHeight()*2/3);
+        yes.setCenter(cfScreen.getWidth() * 0.3, cfScreen.getHeight() * 2 / 3);
 
         Button no = new Button("NO");
         cfScreen.add(no);
-        no.setCenter(cfScreen.getWidth() * 0.7, cfScreen.getHeight()*2/3);
-    
+        no.setCenter(cfScreen.getWidth() * 0.7, cfScreen.getHeight() * 2 / 3);
+
         yes.onClick(() -> {
             cfScreen.closeWindow();
             restartCurrentGame();
         });
-    
+
         no.onClick(() -> {
             cfScreen.closeWindow();
             resumeTimer();
         });
     }
 
-      private void promptUserForResumeConfirmation() {
+    /**
+     * Generate a pop up screen with 1 button to confirm whether user wants to resume the game
+     */
+    private void promptUserForResumeConfirmation() {
         CanvasWindow cfScreen = new CanvasWindow("GAME IS PAUSED", canvas.getWidth() / 3, canvas.getHeight() / 12);
 
         Button resume = new Button("RESUME GAME");
@@ -434,35 +455,44 @@ public class GameManager {
             cfScreen.closeWindow();
             resumeTimer();
         });
-    
+
     }
-    
+
+
+    /**
+     * Restart the game in its current level
+     */
     private void restartCurrentGame() {
         canvas.removeAll();
-        canvas.closeWindow(); 
+        canvas.closeWindow();
         cancelTimer();
         setRemainingTime();
-        createGameCanvas(); 
+        createGameCanvas();
         cardGenerator(getCardNum());
         isPaused = false;
         startTimer();
     }
 
-   
+
+    /**
+     * Pause the timer & start a "clock" on the pause time
+     */
     private void pauseTimer() {
         isPaused = true;
-        startPauseTime = System.currentTimeMillis(); 
+        startPauseTime = System.currentTimeMillis();
     }
 
+
+
+     /**
+     * Resume the timer to its previous state by updating remainingTimeInSeconds with how much time has passed since the game was paused
+     */
     private void resumeTimer() {
         isPaused = false;
         long pauseDuration = System.currentTimeMillis() - startPauseTime;
-        remainingTimeInSeconds += (int) (pauseDuration / 1000); 
-       
+        remainingTimeInSeconds += (int) (pauseDuration / 1000);
+
     }
-
-
-
 
 
 }
