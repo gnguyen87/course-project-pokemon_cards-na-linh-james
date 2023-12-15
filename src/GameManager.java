@@ -37,7 +37,7 @@ public class GameManager {
     public Image redoButton;
 
     private boolean isPaused = false;
-    private long startTime = 0; // Variable to track start time of pause
+    private long startPauseTime; // Variable to track start time of pause
 
 
     public void startGame() {
@@ -254,7 +254,6 @@ public class GameManager {
         canvas.add(timerGroup);
         drawTimerBar();
         addTimerPokemon();
-        startTime = System.currentTimeMillis(); // Record the start time
 
         timeThread = new Thread(() -> {
             while (remainingTimeInSeconds > 0 && !Thread.currentThread().isInterrupted()) {
@@ -404,34 +403,30 @@ public class GameManager {
     
     private void restartCurrentGame() {
         canvas.removeAll();
-        canvas.closeWindow(); // Clear the canvas content
+        canvas.closeWindow(); 
         cancelTimer();
         setRemainingTime();
-        createGameCanvas(); // Recreate the game components
+        createGameCanvas(); 
         cardGenerator(getCardNum());
         isPaused = false;
         startTimer();
-        
     }
 
    
-    public void pauseTimer() {
+    private void pauseTimer() {
         isPaused = true;
-        startTime = System.currentTimeMillis(); // Record the pause time
+        startPauseTime = System.currentTimeMillis(); 
     }
 
-    public void resumeTimer() {
+    private void resumeTimer() {
         isPaused = false;
-        long pauseDuration = System.currentTimeMillis() - startTime;
+        long pauseDuration = System.currentTimeMillis() - startPauseTime;
         remainingTimeInSeconds += (int) (pauseDuration / 1000); 
-        startTime = System.currentTimeMillis() - pauseDuration; 
+       
     }
 
 
 
-
-   
-    
 
 
 }
