@@ -4,6 +4,7 @@ public class PokemonCardGame {
         PokemonCardGame game = new PokemonCardGame();
         game.run();
     }
+    
     public void run() {
         GameManager gameManager = new GameManager();
         StartMenu.displayStartMenu(gameManager);

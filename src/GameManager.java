@@ -25,14 +25,16 @@ public class GameManager {
 
     private GraphicsText attemptsText;
     private GraphicsText gameOverText;
+    
     private Image gameOverImage;
-
     private Image winningImage;
 
     private Rectangle timerBarOutline;
     private Rectangle timerBar;
+    
     private Image timerPokemon;
     private Image pokeball;
+    private Image retryButton;
 
     public void startGame() {
         createGameCanvas();
@@ -56,7 +58,7 @@ public class GameManager {
         attemptsText.setFontSize(20);
         canvas.add(attemptsText);
 
-        attemptsText.setCenter(canvas.getWidth() - 100, 50);
+        attemptsText.setCenter(canvas.getWidth() - 150, 50);
         gameOverText = new GraphicsText("Game Over!");
         gameOverText.setFontSize(40);
         gameOverText.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 2);
@@ -69,12 +71,20 @@ public class GameManager {
         pokeball = new Image("pokeball.png");
         pokeball.setMaxHeight(100);
         pokeball.setMaxWidth(100);
-        pokeball.setCenter(canvas.getWidth() - 100, 150);
+        pokeball.setCenter(canvas.getWidth() - 150, 150);
         canvas.add(pokeball);
+
         winningImage = new Image("game_over/poke_game_over.png");
         winningImage.setMaxWidth(canvas.getWidth());
         winningImage.setMaxHeight(canvas.getHeight());
         winningImage.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 2);
+
+        retryButton = new Image("buttons/redo_button.png");
+        retryButton.setMaxHeight(150);
+        retryButton.setMaxWidth(150);
+        retryButton.setCenter(canvas.getWidth() - 150, 450);
+        canvas.add(retryButton);
+
 
         startTimer();
     }
