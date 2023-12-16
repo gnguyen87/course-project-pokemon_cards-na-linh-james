@@ -82,7 +82,7 @@ public class GameManager {
         pokeball.setCenter(canvas.getWidth() - 120, 150);
         canvas.add(pokeball);
 
-        winningImage = new Image("game_over/poke_game_over.png");
+        winningImage = new Image("game_over/poke_lover.jpg");
         winningImage.setMaxWidth(canvas.getWidth());
         winningImage.setMaxHeight(canvas.getHeight());
         winningImage.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 2);
@@ -168,9 +168,7 @@ public class GameManager {
             }
         }
 
-        if (cards.isEmpty()) {
-            displayWinningImage();
-        }
+        
     }
 
 
@@ -180,6 +178,7 @@ public class GameManager {
     private void displayWinningImage() {
         canvas.removeAll();
         canvas.add(winningImage);
+
     }
 
     /**
@@ -210,6 +209,13 @@ public class GameManager {
     public void removeCard(PokemonCard card) {
         canvas.remove(card.getGraphicsGroup());
         cards.remove(card);
+        gameWin();
+    }
+
+    public void gameWin() {
+        if (cards.isEmpty()) {
+            displayWinningImage();
+        }
     }
 
     public PokemonCard getFirstFlipped() {
