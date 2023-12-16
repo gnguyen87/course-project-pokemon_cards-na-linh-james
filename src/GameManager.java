@@ -19,7 +19,7 @@ public class GameManager {
     private final double DISTANCE = 20;
     private int remainingTimeInSeconds = 5 * 60; // 5 minutes in seconds
     private int currentnumPairs;
-    private GraphicsGroup timerGroup;
+    private GraphicsGroup timerGroup = new GraphicsGroup();
 
     private int attemptsCount;
 
@@ -108,8 +108,8 @@ public class GameManager {
         homeButton.setMaxWidth(130);
         homeButton.setCenter(canvas.getWidth() - 120, 750);
         canvas.add(homeButton);
-
-
+        
+        canvas.onClick(event -> returnHome(event.getPosition()));
 
 
     }
@@ -272,7 +272,6 @@ public class GameManager {
      */
     public void startTimer() {
         cancelTimer();
-        timerGroup = new GraphicsGroup();
         canvas.add(timerGroup);
         drawTimerBar();
         addTimerPokemon();
@@ -310,7 +309,7 @@ public class GameManager {
         }
     }
 
-    private void setRemainingTime() {
+    public void setRemainingTime() {
         remainingTimeInSeconds = 5 * 60;
     }
 
@@ -392,9 +391,9 @@ public class GameManager {
         pokeballAnimation.start();
     }
 
-     /**
-     * Carry out the tasks when user clicks on the redo button:
-     * 1) Pause timer
+    /**
+     * Carry out the tasks when user clicks on the redo button: 
+     * 1) Pause timer 
      * 2) Pop up a screen to ask user confirmation
      */
 
@@ -409,8 +408,8 @@ public class GameManager {
 
 
     /**
-     * Carry out the tasks when user clicks on the pause button:
-     * 1) Pause timer
+     * Carry out the tasks when user clicks on the pause button: 
+     * 1) Pause timer 
      * 2) Pop up a screen to ask user confirmation
      */
     private void pauseGame(Point userPoint) {
@@ -423,9 +422,23 @@ public class GameManager {
     }
 
     /**
+     * Carry out the tasks when user clicks on the home button: 
+     * 1) Pause timer 
+     * 2) Pop up a screen to ask user confirmation
+     */
+    private void returnHome(Point userPoint) {
+        GraphicsObject obj = canvas.getElementAt(userPoint);
+        if (obj == homeButton) {
+            pauseTimer();
+            promptUserForReturnHomeConfirmation();
+
+        }
+    }
+
+    /**
      * Generate a pop up screen with 2 buttons (Yes/No) to confirm whether user wants to redo the game
-     * If 'Yes' button is clicked, the game restarts to its current level
-     * If 'No' button is clicked, the game resumes to its current status
+     * If 'Yes' button is clicked, the game restarts to its current level If 'No' button is clicked, the
+     * game resumes to its current status
      */
     private void promptUserForRedoConfirmation() {
         CanvasWindow cfScreen = new CanvasWindow("ARE YOU SURE YOU WANT TO RETRY?", canvas.getWidth() / 3,
@@ -467,6 +480,40 @@ public class GameManager {
 
     }
 
+     /**
+     * Generate a pop up screen with 1 button to confirm whether user wants to resume the game
+     */
+    private void promptUserForReturnHomeConfirmation() {
+        CanvasWindow cfScreen = new CanvasWindow("DO YOU WANT TO GO TO HOME SCREEN?", canvas.getWidth() / 3, canvas.getHeight() / 12);
+        GraphicsText message = new GraphicsText("*Your current game will be deleted!*");
+        cfScreen.add(message);
+        message.setCenter(cfScreen.getWidth() * 0.5, cfScreen.getHeight() * 0.2);
+        
+        Button resume = new Button("RESUME GAME");
+        cfScreen.add(resume);
+        resume.setCenter(cfScreen.getWidth() * 0.3, cfScreen.getHeight() * 0.6);
+
+        Button home = new Button("HOME SCREEN");
+        cfScreen.add(home);
+        home.setCenter(cfScreen.getWidth() * 0.7, cfScreen.getHeight() * 0.6);
+
+        resume.onClick(() -> {
+            cfScreen.closeWindow();
+            resumeTimer();
+        });
+
+        home.onClick(() -> {
+            cfScreen.closeWindow();
+            canvas.removeAll();
+            canvas.closeWindow();
+            cancelTimer();
+            setRemainingTime();
+            isPaused = false;
+            StartMenu.displayStartMenu(this);
+        });
+
+    }
+
 
     /**
      * Restart the game in its current level
@@ -492,9 +539,9 @@ public class GameManager {
     }
 
 
-
-     /**
-     * Resume the timer to its previous state by updating remainingTimeInSeconds with how much time has passed since the game was paused
+    /**
+     * Resume the timer to its previous state by updating remainingTimeInSeconds with how much time has
+     * passed since the game was paused
      */
     private void resumeTimer() {
         isPaused = false;

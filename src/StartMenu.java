@@ -4,9 +4,10 @@ import edu.macalester.graphics.ui.Button;
 
 
 public class StartMenu {
+    public static CanvasWindow menuCanvas;
 
     public static void displayStartMenu(GameManager gameManager) {
-        CanvasWindow menuCanvas = new CanvasWindow("Pokemon Card Game - Start Menu", 1200, 1000);
+        menuCanvas = new CanvasWindow("Pokemon Card Game - Start Menu", 1200, 1000);
 
         // Title
         GraphicsText titleText = new GraphicsText("Pokemon Card Game");
@@ -46,8 +47,11 @@ public class StartMenu {
             20, gameManager);
         addDifficultyButton(menuCanvas, "15 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1 / 2 + 180, 15,
             30, gameManager);
+
+       
     }
 
+   
     /**
      * Generate a button for different levels If button is clicked, a game will be generated with the
      * appropriate numbers of cards & attempts according to the chosen level
@@ -67,10 +71,13 @@ public class StartMenu {
             gameManager.setAttempts(numAttempts);
             gameManager.createGameCanvas();
             gameManager.cardGenerator(numPairs);
-            gameManager.startTimer();
             gameManager.setCardNum(numPairs);
-            startCanvas.draw();
+            gameManager.startTimer();
+            gameManager.updateCanvas();
         });
     }
+
+
+
 
 }
