@@ -481,7 +481,7 @@ public class GameManager {
     }
 
      /**
-     * Generate a pop up screen with 1 button to confirm whether user wants to resume the game
+     * Generate a pop up screen with 1 button to confirm whether user wants to return to Home Screen
      */
     private void promptUserForReturnHomeConfirmation() {
         CanvasWindow cfScreen = new CanvasWindow("DO YOU WANT TO GO TO HOME SCREEN?", canvas.getWidth() / 3, canvas.getHeight() / 12);
