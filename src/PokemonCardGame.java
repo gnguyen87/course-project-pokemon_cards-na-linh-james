@@ -3,14 +3,15 @@ public class PokemonCardGame {
 
     public static void main(String[] args) {
         PokemonCardGame game = new PokemonCardGame();
-        String filepath = "res/music/guide.wav";
+        String filepath = "res/music/poke_compilation.wav";
         PokeMusic.PlayMusic(filepath);
-        // JOptionPane.showMessageDialog(null, "Press okay to stop playing");
         game.run();
+       
     }
 
-    public void run() {
+    public boolean run() {
         StartMenu.displayStartMenu(gm);
+        return true;
     }
 
 
