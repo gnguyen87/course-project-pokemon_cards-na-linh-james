@@ -2,7 +2,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 
@@ -10,8 +9,9 @@ public class PokeMusic {
 
 
     /**
-     * Set number of attempts based on difficulty level
-     * Sources: 
+     * Loops over 1997 pokemon music
+     * Sources: (<https://downloads.khinsider.com/game-soundtracks/album/pokemon-game-boy-pok-mon-sound-complete-set-play-cd>),
+     *          (<https://www.youtube.com/watch?v=wJO_cq5XeSA>)
      */
     public static void PlayMusic(String location) {
         try {
