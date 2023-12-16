@@ -24,28 +24,28 @@ public class StartMenu {
         // Easy
         GraphicsText easy = new GraphicsText("Easy");
         easy.setFontSize(menuCanvas.getHeight() / 30); // Adjust the font size proportionally
-        easy.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1 / 4 + 170);
+        easy.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() / 4 + 170);
         menuCanvas.add(easy);
 
         // Medium
         GraphicsText medium = new GraphicsText("Medium");
         medium.setFontSize(menuCanvas.getHeight() / 30); // Adjust the font size proportionally
-        medium.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1 / 2 + 50);
+        medium.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() / 4 + 270);
         menuCanvas.add(medium);
 
         // Difficult
         GraphicsText difficult = new GraphicsText("Difficult");
         difficult.setFontSize(menuCanvas.getHeight() / 30); // Adjust the font size proportionally
-        difficult.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1 / 2 + 150);
+        difficult.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() / 4 + 370);
         menuCanvas.add(difficult);
 
 
         // Buttons
-        addDifficultyButton(menuCanvas, "5 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1 / 4 + 200, 5,
+        addDifficultyButton(menuCanvas, "5 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() / 4 + 200, 5,
             10, gameManager);
-        addDifficultyButton(menuCanvas, "10 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1 / 2 + 90, 10,
+        addDifficultyButton(menuCanvas, "10 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() /4 + 300, 10,
             20, gameManager);
-        addDifficultyButton(menuCanvas, "15 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() * 1 / 2 + 180, 15,
+        addDifficultyButton(menuCanvas, "15 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() /4 + 400, 15,
             30, gameManager);
 
        

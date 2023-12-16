@@ -441,14 +441,14 @@ public class GameManager {
      * game resumes to its current status
      */
     private void promptUserForRedoConfirmation() {
-        CanvasWindow cfScreen = new CanvasWindow("ARE YOU SURE YOU WANT TO RETRY?", canvas.getWidth() / 3,
+        CanvasWindow cfScreen = new CanvasWindow("ARE YOU SURE YOU WANT TO START OVER?", canvas.getWidth() / 3,
             canvas.getHeight() / 12);
 
-        Button yes = new Button("YES");
+        Button yes = new Button("START OVER");
         cfScreen.add(yes);
         yes.setCenter(cfScreen.getWidth() * 0.3, cfScreen.getHeight() * 2 / 3);
 
-        Button no = new Button("NO");
+        Button no = new Button("RESUME GAME");
         cfScreen.add(no);
         no.setCenter(cfScreen.getWidth() * 0.7, cfScreen.getHeight() * 2 / 3);
 
