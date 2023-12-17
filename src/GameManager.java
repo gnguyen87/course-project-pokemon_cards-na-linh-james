@@ -17,7 +17,8 @@ public class GameManager {
 
     private Thread timeThread;
     private final double DISTANCE = 20;
-    private int remainingTimeInSeconds = 5 * 60; // 5 minutes in seconds
+    private int remainingTimeInSeconds;
+    private int initialTime;
     private int currentnumPairs;
     private GraphicsGroup timerGroup = new GraphicsGroup();
 
@@ -110,8 +111,6 @@ public class GameManager {
         canvas.add(homeButton);
         
         canvas.onClick(event -> returnHome(event.getPosition()));
-
-
     }
 
     /**
@@ -176,8 +175,6 @@ public class GameManager {
     private void displayWinningImage() {
         canvas.removeAll();
         canvas.add(winningImage);
-
-
     }
 
     /**
@@ -186,13 +183,8 @@ public class GameManager {
     private void updateGameOverDisplay() {
         canvas.removeAll();
         canvas.add(gameOverImage);
-    
     }
     
-    
-
-    
-
     /**
      * Read in all pokemon images file and add it to a list of strings Source:
      * https://intellipaat.com/community/38545/how-do-i-iterate-through-the-files-in-a-directory-in-java#:~:text=1%20Answer&text=You%20can%20use%20File%23isDirectory,This%20is%20called%20recursion.
@@ -209,12 +201,19 @@ public class GameManager {
         return pokemonImages;
     }
 
+    /**
+     * Remove the input card from the canvas then check if there's still any cards left on canvas.
+     * @param card
+     */
     public void removeCard(PokemonCard card) {
         canvas.remove(card.getGraphicsGroup());
         cards.remove(card);
         gameWin();
     }
 
+    /**
+     * Check if there is any card left, if not, displaying the winning image
+     */
     public void gameWin() {
         if (cards.isEmpty()) {
             displayWinningImage();
@@ -250,7 +249,7 @@ public class GameManager {
     }
 
     /**
-     * Draw the time bar
+     * Draw the black time bar's outline and the pink timer bar's fill
      */
     private void drawTimerBar() {
         timerBarOutline = new Rectangle(70, 170, 40, 550);
@@ -279,11 +278,12 @@ public class GameManager {
      * Start timer for the game and add all timer graphics Source: https://chat.openai.com (Prompt: "how
      * to add a timer that counts down 5 minutes on the screen the moment the game runs" )
      */
-    public void startTimer() {
+    public void startTimer(int timeInMinutes) {
         cancelTimer();
         canvas.add(timerGroup);
         drawTimerBar();
         addTimerPokemon();
+        setRemainingTime(timeInMinutes);
 
         timeThread = new Thread(() -> {
             while (remainingTimeInSeconds > 0 && !Thread.currentThread().isInterrupted()) {
@@ -318,8 +318,9 @@ public class GameManager {
         }
     }
 
-    public void setRemainingTime() {
-        remainingTimeInSeconds = 5 * 60;
+    public void setRemainingTime(int timeInMinutes) {
+        remainingTimeInSeconds = timeInMinutes * 60;
+        initialTime = timeInMinutes;
     }
 
 
@@ -332,7 +333,7 @@ public class GameManager {
         String timeString = String.format("%02d:%02d", minutes, seconds);
 
         // Calculate the ratio of remaining time to the initial time
-        double ratio = (double) remainingTimeInSeconds / (5 * 60); // Assuming initial time is 5 minutes
+        double ratio = (double) remainingTimeInSeconds / (initialTime * 60); // Assuming initial time is 5 minutes
 
         // Calculate the new height of the timerBar
         double newHeight = ratio * 545; // 545 is the initial height of the timerBar
@@ -517,7 +518,7 @@ public class GameManager {
             canvas.removeAll();
             canvas.closeWindow();
             cancelTimer();
-            setRemainingTime();
+            setRemainingTime(initialTime); 
             isPaused = false;
             StartMenu.displayStartMenu(this);
         });
@@ -532,11 +533,11 @@ public class GameManager {
         canvas.removeAll();
         canvas.closeWindow();
         cancelTimer();
-        setRemainingTime();
+        setRemainingTime(initialTime); 
         createGameCanvas();
         cardGenerator(getCardNum());
         isPaused = false;
-        startTimer();
+        startTimer(initialTime); 
     }
 
 
@@ -557,7 +558,6 @@ public class GameManager {
         isPaused = false;
         long pauseDuration = System.currentTimeMillis() - startPauseTime;
         remainingTimeInSeconds += (int) (pauseDuration / 1000);
-
     }
 
 

@@ -8,14 +8,13 @@ James Hernandez, Linh Nguyen, Na Nguyen
 <img width="888" alt="Screenshot 2023-12-10 at 4 59 06 PM" src="https://github.com/Mac-COMP-127-Fall-2023/course-project-pokemon_cards-na-linh-james/assets/134335069/ee0072e4-d26a-4eee-a908-fbb74e3874e0">
 <img width="888" alt="Screenshot 2023-12-10 at 5 05 42 PM" src="https://github.com/Mac-COMP-127-Fall-2023/course-project-pokemon_cards-na-linh-james/assets/134335069/2a9f9a88-50e5-4482-826b-0f9e973d1a6d">
 
-The game begins with 30 cards flipped upside down. Upon clicking one of the cards, it flips face-side-up to reveal the pokemon it pertains to. The goal of the each round is to find the matching card, with 15 total pairs, for the card flipped. Upon the second card being clicked, if it is not a correct match, the cards will flip back over to hide the pokemon. However, if they match, the two cards will be removed from the screen. The goal of the game is to remove all pairs before the given time and under the limited number of attempts.
+The game has 3 levels of difficulty: easy (5 pairs, 10 attempts), medium (10 pairs, 20 attempts), and difficult (15 pairs, 30 attempts). The game begins with all cards flipped upside down. Upon clicking one of the cards, it flips face-side-up to reveal the pokemon it pertains to. The goal of the each round is to find the matching card, with 15 total pairs, for the card flipped. Upon the second card being clicked, if it is not a correct match, the cards will flip back over to hide the pokemon. However, if they match, the two cards will be removed from the screen. The goal of the game is to remove all pairs before the given time and under the limited number of attempts.
 
 
 ## UML Diagram
 Below is a UML Diagram of our classes, their variables, methods, and their relationships.
 
 <img width="700" alt="Screenshot 2023-12-10 at 5 15 27 PM" src="https://github.com/Mac-COMP-127-Fall-2023/course-project-pokemon_cards-na-linh-james/assets/134335069/4f6b2074-5336-4c13-91cf-4d637232feab">
-
 
 
 
@@ -31,7 +30,7 @@ Use [kilt-graphics API](<https://mac-comp127.github.io/kilt-graphics/>) to gener
 Running the Program: Execute the PokemonCardGame class, which serves as the main class. -->
 
 ## Acknowledgements: 
-We got the inspiration from the Vietnamese card game __. This source-game is similar in that cards must match, but has different logics and rules. It is necessary to mention the very welcomed help from __ that helped us to __. 
+We got the inspiration from the Vietnamese card game "Noi hinh Pikachu". This source-game is similar in that cards must match, but has different logics and rules. It is necessary to mention the very welcomed help from Mac alumni Nam Nguyen who helped us to work out flipping and matching cards' logic. 
 
 Our pokemon card images come directly from the pokemon official pokedex website, which has images and information on all 406 pokemon. (<https://www.pokemon.com/us/pokedex>). 
 

@@ -39,6 +39,7 @@ public class StartMenu {
         difficult.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() / 4 + 370);
         menuCanvas.add(difficult);
 
+        // Decorative pokemons for menu screen
         Pokemon pokemon1 = new Pokemon("pokemon_images/wooper.png");
         pokemon1.setMaxHeight(350);
         pokemon1.setMaxWidth(350);
@@ -54,13 +55,11 @@ public class StartMenu {
 
         // Buttons
         addDifficultyButton(menuCanvas, "5 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() / 4 + 200, 5,
-            10, gameManager);
+            10, 2, gameManager);
         addDifficultyButton(menuCanvas, "10 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() /4 + 300, 10,
-            20, gameManager);
+            20, 3, gameManager);
         addDifficultyButton(menuCanvas, "15 Pairs", menuCanvas.getWidth() / 2, menuCanvas.getHeight() /4 + 400, 15,
-            30, gameManager);
-
-       
+            30, 5, gameManager);   
     }
 
    
@@ -74,6 +73,7 @@ public class StartMenu {
                                         double y,
                                         int numPairs,
                                         int numAttempts,
+                                        int timeInMinutes,
                                         GameManager gameManager) {
         Button button = new Button(text);
         button.setCenter(x, y);
@@ -84,12 +84,9 @@ public class StartMenu {
             gameManager.createGameCanvas();
             gameManager.cardGenerator(numPairs);
             gameManager.setCardNum(numPairs);
-            gameManager.startTimer();
+            gameManager.startTimer(timeInMinutes);
             gameManager.updateCanvas();
         });
     }
-
-
-
 
 }
