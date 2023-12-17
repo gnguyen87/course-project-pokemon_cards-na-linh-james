@@ -37,7 +37,6 @@ public class GameManager {
     private Image redoButton;
     private Image pauseButton;
     private Image homeButton;
-    private Image quitButton;
 
 
     private boolean isPaused = false;
@@ -167,9 +166,7 @@ public class GameManager {
                 centerX = canvas.getWidth() * 0.15;
                 centerY += card.CARD_HEIGHT + DISTANCE * 0.5;
             }
-        }
-
-        
+        } 
     }
 
 
@@ -180,19 +177,6 @@ public class GameManager {
         canvas.removeAll();
         canvas.add(winningImage);
 
-        // Display homeButton
-        canvas.add(homeButton);
-    
-        // Display quitButton
-        quitButton = new Image("buttons/quit.png");
-        quitButton.setMaxHeight(130);
-        quitButton.setMaxWidth(130);
-        quitButton.setCenter(canvas.getWidth() + 30, 750);
-        canvas.add(quitButton);
-    
-        // Set up event handlers for homeButton and quitButton
-        canvas.onClick(event -> goToHomeScreen(event.getPosition()));
-        canvas.onClick(event -> quitGame(event.getPosition()));
 
     }
 
@@ -203,45 +187,11 @@ public class GameManager {
         canvas.removeAll();
         canvas.add(gameOverImage);
     
-        // Display homeButton
-        canvas.add(homeButton);
-    
-        // Display quitButton
-        quitButton = new Image("buttons/quit.png");
-        quitButton.setMaxHeight(130);
-        quitButton.setMaxWidth(130);
-        quitButton.setCenter(canvas.getWidth() + 30 , 750);
-        canvas.add(quitButton);
-    
-        // Set up event handlers for homeButton and quitButton
-        canvas.onClick(event -> goToHomeScreen(event.getPosition()));
-        canvas.onClick(event -> quitGame(event.getPosition()));
     }
     
     
-    /**
-     * Handle the click event for the homeButton.
-     * This method will take the user back to the home screen or start menu.
-     */
-    private void goToHomeScreen(Point clickPoint) {
-        GraphicsObject obj = canvas.getElementAt(clickPoint);
-        if (obj == homeButton) {
-            canvas.closeWindow();  // Clear the canvas
-            // canvas.removeAll();  # i changed this because mine had a glitch, pls fix if i was wrong !!
-            startGame();         // Show the start menu again
-        }
-    }
 
-    /**
-     * Handle the click event for the quitButton.
-     * This method will close the entire canvas when the quit button is clicked.
-     */
-    private void quitGame(Point clickPoint) {
-        GraphicsObject obj = canvas.getElementAt(clickPoint);
-        if (obj == quitButton) {
-            canvas.closeWindow();  // Close the entire canvas
-        }
-    }
+    
 
     /**
      * Read in all pokemon images file and add it to a list of strings Source:

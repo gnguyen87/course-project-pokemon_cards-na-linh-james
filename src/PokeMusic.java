@@ -33,11 +33,13 @@ public class PokeMusic {
                 });
 
                 clip.loop(Clip.LOOP_CONTINUOUSLY); // Loop the music continuously
-            } else {
+            } 
+            else {
                 System.out.println("Can't find file");
             }
 
-        } catch (Exception e) {
+        } 
+        catch (Exception e) {
             System.out.println(e);
         }
     }
