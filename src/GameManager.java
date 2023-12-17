@@ -69,7 +69,7 @@ public class GameManager {
 
         gameOverImage = new Image("game_over/poke_game_over.png");
         gameOverImage.setMaxWidth(canvas.getWidth());
-        gameOverImage.setMaxHeight(canvas.getHeight());
+        gameOverImage.setMaxHeight(canvas.getHeight()-300);
         gameOverImage.setCenter(canvas.getWidth() / 2, canvas.getHeight() / 3);
 
         pokeball = new Image("pokeball.png");
@@ -110,7 +110,7 @@ public class GameManager {
         homeButton_gameOver = new Image("buttons/home_button.png");
         homeButton_gameOver.setMaxHeight(130);
         homeButton_gameOver.setMaxWidth(130);
-        homeButton_gameOver.setCenter(canvas.getWidth() - 120, canvas.getHeight() - 300);
+        homeButton_gameOver.setCenter(canvas.getWidth() - 120, canvas.getHeight() - 250);
         
         canvas.onClick(event -> returnHome_gameOver(event.getPosition()));
     }
@@ -173,7 +173,6 @@ public class GameManager {
     private void displayWinningImage() {
         canvas.removeAll();
         canvas.add(winningImage);
-
         canvas.add(homeButton_gameOver);
 
 
