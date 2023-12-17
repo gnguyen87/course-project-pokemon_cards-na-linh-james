@@ -95,7 +95,7 @@ public class GameManager {
         redoButton = new Image("buttons/redo_button.png");
         redoButton.setMaxHeight(150);
         redoButton.setMaxWidth(150);
-        redoButton.setCenter(canvas.getWidth() - 120, 450);
+        redoButton.setCenter(canvas.getWidth() - 120, canvas.getHeight() - 600);
         canvas.add(redoButton);
 
         canvas.onClick(event -> redoGame(event.getPosition()));
@@ -103,7 +103,7 @@ public class GameManager {
         pauseButton = new Image("buttons/pause_button.png");
         pauseButton.setMaxHeight(150);
         pauseButton.setMaxWidth(150);
-        pauseButton.setCenter(canvas.getWidth() - 120, 600);
+        pauseButton.setCenter(canvas.getWidth() - 120, canvas.getHeight() - 450);
         canvas.add(pauseButton);
 
         canvas.onClick(event -> pauseGame(event.getPosition()));
@@ -111,7 +111,7 @@ public class GameManager {
         homeButton = new Image("buttons/home_button.png");
         homeButton.setMaxHeight(130);
         homeButton.setMaxWidth(130);
-        homeButton.setCenter(canvas.getWidth() - 120, 750);
+        homeButton.setCenter(canvas.getWidth() - 120, canvas.getHeight() - 300);
         canvas.add(homeButton);
         
         canvas.onClick(event -> returnHome(event.getPosition()));
@@ -119,7 +119,7 @@ public class GameManager {
         homeButton_gameOver = new Image("buttons/home_button.png");
         homeButton_gameOver.setMaxHeight(130);
         homeButton_gameOver.setMaxWidth(130);
-        homeButton_gameOver.setCenter(canvas.getWidth() - 120, 750);
+        homeButton_gameOver.setCenter(canvas.getWidth() - 120, canvas.getHeight() - 300);
         
         canvas.onClick(event -> returnHome_gameOver(event.getPosition()));
     }
