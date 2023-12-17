@@ -6,6 +6,12 @@ import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 
+/**
+ * Authors: Na Nguyen, James Hernandez, Linh Nguyen
+ * Create a complete pokemon card: pink rectangle and a pokemon image inside.
+ * This class manages flipping cards (by making the pokemon image inside appear or disappear) and matching cards (checking 
+ * their names and if the same, removing them both from canvas).
+ */
 public class PokemonCard {
     public final double CARD_WIDTH = 120;
     public final double CARD_HEIGHT = 150;

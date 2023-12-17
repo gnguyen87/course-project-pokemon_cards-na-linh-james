@@ -8,7 +8,10 @@ import java.util.List;
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.ui.Button;
 
-
+/**
+ * Authors: Na Nguyen, James Hernandez, Linh Nguyen
+ * Managing the main game canvas: set up all pokemon cards, all time graphic elements, buttons, and main game functions.
+ */
 public class GameManager {
     private CanvasWindow canvas;
 
@@ -333,7 +336,7 @@ public class GameManager {
         String timeString = String.format("%02d:%02d", minutes, seconds);
 
         // Calculate the ratio of remaining time to the initial time
-        double ratio = (double) remainingTimeInSeconds / (initialTime * 60); // Assuming initial time is 5 minutes
+        double ratio = (double) remainingTimeInSeconds / (initialTime * 60); 
 
         // Calculate the new height of the timerBar
         double newHeight = ratio * 545; // 545 is the initial height of the timerBar

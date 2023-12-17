@@ -2,7 +2,11 @@
 import edu.macalester.graphics.*;
 import edu.macalester.graphics.ui.Button;
 
-
+/**
+ * Authors: Na Nguyen, James Hernandez, Linh Nguyen
+ * Setting up the starter Menu canvas after the game is run. Menu offers 3 different levels of difficulty for player to choose.
+ * This is also the home menu that user can choose to come back to after playing.
+ */
 public class StartMenu {
     public static CanvasWindow menuCanvas;
 

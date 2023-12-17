@@ -5,8 +5,11 @@ import java.io.File;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 
+/**
+ * Authors: Na Nguyen, James Hernandez, Linh Nguyen
+ * Add background music when user starts playing the game.
+ */
 public class PokeMusic {
-
 
     /**
      * Loops over pokemon music from 1997. 

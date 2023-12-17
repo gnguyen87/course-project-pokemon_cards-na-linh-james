@@ -1,5 +1,10 @@
 import edu.macalester.graphics.Image;
 
+/**
+ * Authors: Na Nguyen, James Hernandez, Linh Nguyen
+ * Create the pokemon image for the pokemon cards.
+ * Pokemon's names are the most important characteristic of this class objects and will determine if cards are matched.
+ */
 public class Pokemon extends Image implements Comparable<Pokemon> {
     private String name;
 
