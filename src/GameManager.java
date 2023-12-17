@@ -365,7 +365,8 @@ public class GameManager {
         if (attemptsCount <= 0) {
             canvas.removeAll();
             updateGameOverDisplay();
-        } else {
+        } 
+        else {
             attemptsText.setText("Attempts: " + attemptsCount);
             updateCanvas();
         }

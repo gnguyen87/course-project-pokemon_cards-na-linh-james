@@ -41,6 +41,8 @@ With the use of a Youtube Channel "Coding with John," we were able to find infor
 
 We used oracle (<https://docs.oracle.com/javase/8/docs/api/java/awt/GraphicsEnvironment.html>) to learn more about the built in java graphics, which was used for the start menu. 
 
+We added music from the 1997 game. We donloaded this music from a CD website, khinsider. We compiled four of these songs - guide, cycling, Pewter City, and Casino - with the program Audacity to make the first music loop run for at least 5 minutes (<https://downloads.khinsider.com/game-soundtracks/album/pokemon-game-boy-pok-mon-sound-complete-set-play-cd>). To add music, we watched a youtuber Max O'Didily (<https://www.youtube.com/watch?v=wJO_cq5XeSA>). 
+
 ## Known Issues:
 Using kilt.graphics as the basis for its GUI, Pokemon Memory Game has certain limitations in advanced graphical animations that can be achieved by using other packages such as Swing. There are no specific bugs, glitches, or shortcomings that users should be aware of as of today. 
 

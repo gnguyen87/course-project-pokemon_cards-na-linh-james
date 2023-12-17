@@ -9,7 +9,7 @@ public class PokeMusic {
 
 
     /**
-     * Loops over 1997 pokemon music
+     * Loops over pokemon music from 1997. 
      * Sources: (<https://downloads.khinsider.com/game-soundtracks/album/pokemon-game-boy-pok-mon-sound-complete-set-play-cd>),
      *          (<https://www.youtube.com/watch?v=wJO_cq5XeSA>)
      */
@@ -37,7 +37,6 @@ public class PokeMusic {
             else {
                 System.out.println("Can't find file");
             }
-
         } 
         catch (Exception e) {
             System.out.println(e);
