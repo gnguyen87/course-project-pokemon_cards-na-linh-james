@@ -51,15 +51,6 @@ public class GameManager {
         createGameCanvas();
     }
 
-    /**
-     * Set number of attempts based on difficulty level
-     * 
-     * @param numAttempts
-     * @return attempts' count that corresponds to the chosen game level.
-     */
-    public int setAttempts(int numAttempts) {
-        return this.attemptsCount = numAttempts;
-    }
 
     /**
      * Create the Game Canvas for each level
@@ -393,6 +384,17 @@ public class GameManager {
     private int getAttempt() {
         return this.attemptsCount;
     }
+
+    /**
+     * Set number of attempts based on difficulty level
+     * 
+     * @param numAttempts
+     * @return attempts' count that corresponds to the chosen game level.
+     */
+    public int setAttempts(int numAttempts) {
+        return this.attemptsCount = numAttempts;
+    }
+
 
     /**
      * Ring the pokeball when there is a valid match Source: https://chat.openai.com (Prompt: "How to
