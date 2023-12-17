@@ -26,6 +26,7 @@ public class GameManager {
     private GraphicsGroup timerGroup = new GraphicsGroup();
 
     private int attemptsCount;
+    private int updatedAttemps;
 
     private GraphicsText attemptsText;
     private GraphicsText gameOverText;
@@ -57,7 +58,7 @@ public class GameManager {
      */
     public void createGameCanvas() {
         canvas = new CanvasWindow("Pokemon Card Puzzle", 1200, 1000);
-        attemptsText = new GraphicsText("Attempts: " + attemptsCount);
+        attemptsText = new GraphicsText("Attempts: " + updatedAttemps);
         attemptsText.setFontSize(20);
         canvas.add(attemptsText);
 
@@ -188,6 +189,7 @@ public class GameManager {
     private void updateGameOverDisplay() {
         canvas.removeAll();
         canvas.add(gameOverImage);
+        canvas.add(homeButton_gameOver);
     }
     
     /**
@@ -366,35 +368,35 @@ public class GameManager {
      * Update the number of attempts
      */
     public void AttemptsCount() {
-        int updatedAttemptsCount = attemptsCount;
+        updatedAttemps--;
 
-        updatedAttemptsCount --;
-
-        if (updatedAttemptsCount <= 0) {
+        if (updatedAttemps <= 0) {
             canvas.removeAll();
             updateGameOverDisplay();
         } 
         else {
-            attemptsText.setText("Attempts: " + updatedAttemptsCount);
+            attemptsText.setText("Attempts: " + updatedAttemps);
             updateCanvas();
         }
     }
 
-
-    private int getAttempt() {
-        return this.attemptsCount;
-    }
-
-    /**
+     /**
      * Set number of attempts based on difficulty level
-     * 
      * @param numAttempts
      * @return attempts' count that corresponds to the chosen game level.
      */
     public int setAttempts(int numAttempts) {
-        return this.attemptsCount = numAttempts;
+        this.attemptsCount = numAttempts;
+        return this.updatedAttemps = numAttempts;
     }
 
+
+    /**
+     * Get original number of attempts based on difficulty level
+     */
+    private int getAttempt() {
+        return this.attemptsCount;
+    }
 
     /**
      * Ring the pokeball when there is a valid match Source: https://chat.openai.com (Prompt: "How to
