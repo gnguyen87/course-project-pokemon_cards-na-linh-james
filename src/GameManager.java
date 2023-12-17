@@ -108,8 +108,8 @@ public class GameManager {
         canvas.onClick(event -> returnHome(event.getPosition()));
 
         homeButton_gameOver = new Image("buttons/home_button.png");
-        homeButton_gameOver.setMaxHeight(130);
-        homeButton_gameOver.setMaxWidth(130);
+        homeButton_gameOver.setMaxHeight(100);
+        homeButton_gameOver.setMaxWidth(100);
         homeButton_gameOver.setCenter(canvas.getWidth() - 120, canvas.getHeight() - 250);
         
         canvas.onClick(event -> returnHome_gameOver(event.getPosition()));

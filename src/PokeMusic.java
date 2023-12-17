@@ -15,6 +15,7 @@ public class PokeMusic {
      * Loops over pokemon music from 1997. 
      * Sources: (<https://downloads.khinsider.com/game-soundtracks/album/pokemon-game-boy-pok-mon-sound-complete-set-play-cd>),
      *          (<https://www.youtube.com/watch?v=wJO_cq5XeSA>)
+     *          (<https://chat.openai.com>): "How to loop through an audio in Java"
      */
     public static void PlayMusic(String location) {
         try {
