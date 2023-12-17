@@ -47,7 +47,6 @@ public class GameManager {
     private boolean isPaused = false;
     private long startPauseTime; // Variable to track start time of pause
 
-
     public void startGame() {
         createGameCanvas();
     }
@@ -260,7 +259,7 @@ public class GameManager {
     }
 
     public void setCardNum(int numPairs) {
-        currentnumPairs = numPairs;
+        this.currentnumPairs = numPairs;
     }
 
     /**
@@ -376,16 +375,23 @@ public class GameManager {
      * Update the number of attempts
      */
     public void AttemptsCount() {
-        attemptsCount--;
+        int updatedAttemptsCount = attemptsCount;
 
-        if (attemptsCount <= 0) {
+        updatedAttemptsCount --;
+
+        if (updatedAttemptsCount <= 0) {
             canvas.removeAll();
             updateGameOverDisplay();
         } 
         else {
-            attemptsText.setText("Attempts: " + attemptsCount);
+            attemptsText.setText("Attempts: " + updatedAttemptsCount);
             updateCanvas();
         }
+    }
+
+
+    private int getAttempt() {
+        return this.attemptsCount;
     }
 
     /**
@@ -565,6 +571,7 @@ public class GameManager {
 
         resume.onClick(() -> {
             cfScreen.closeWindow();
+            setAttempts(getAttempt());
             restartCurrentGame();
         });
 
