@@ -135,21 +135,17 @@ public class GameManager {
         double centerX = canvas.getWidth() * 0.15;
         double centerY = canvas.getHeight() * 0.03;
 
-        int numRows, numCols;
+        int numCols;
 
         // Set the grid layout based on the difficulty level
         if (numPairs == 5) { // Easy
-            numRows = 2;
             numCols = 5;
         } else if (numPairs == 10) { // Medium
-            numRows = 4;
             numCols = 5;
         } else if (numPairs == 15) { // Hard
-            numRows = 5;
             numCols = 6;
         } else {
             // Default to a 4x4 grid if the difficulty level is unknown
-            numRows = 4;
             numCols = 4;
         }
 
