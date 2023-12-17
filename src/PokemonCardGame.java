@@ -9,7 +9,7 @@ public class PokemonCardGame {
     public static void main(String[] args) {
         PokemonCardGame game = new PokemonCardGame();
         String filepath = "res/music/poke_compilation.wav";
-        // PokeMusic.PlayMusic(filepath);
+        PokeMusic.PlayMusic(filepath);
         game.run(); 
     }
 

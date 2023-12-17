@@ -41,6 +41,7 @@ public class GameManager {
     private Image redoButton;
     private Image pauseButton;
     private Image homeButton;
+    private Image homeButton_gameOver;
 
 
     private boolean isPaused = false;
@@ -114,6 +115,13 @@ public class GameManager {
         canvas.add(homeButton);
         
         canvas.onClick(event -> returnHome(event.getPosition()));
+
+        homeButton_gameOver = new Image("buttons/home_button.png");
+        homeButton_gameOver.setMaxHeight(130);
+        homeButton_gameOver.setMaxWidth(130);
+        homeButton_gameOver.setCenter(canvas.getWidth() - 120, 750);
+        
+        canvas.onClick(event -> returnHome_gameOver(event.getPosition()));
     }
 
     /**
@@ -178,6 +186,10 @@ public class GameManager {
     private void displayWinningImage() {
         canvas.removeAll();
         canvas.add(winningImage);
+
+        canvas.add(homeButton_gameOver);
+
+
     }
 
     /**
@@ -382,7 +394,7 @@ public class GameManager {
      */
     public void ringPokeBall() {
         double initialY = pokeball.getCenter().getY();
-        double distance = 5;
+        double distance = 15;
         double duration = 1000;
         long startTime = System.currentTimeMillis();
 
@@ -445,6 +457,14 @@ public class GameManager {
         if (obj == homeButton) {
             pauseTimer();
             promptUserForReturnHomeConfirmation();
+
+        }
+    }
+
+    private void returnHome_gameOver(Point userPoint) {
+        GraphicsObject obj = canvas.getElementAt(userPoint);
+        if (obj == homeButton_gameOver) {
+            promptUserForReturnHome_GameOver_Confirmation();
 
         }
     }
@@ -513,7 +533,39 @@ public class GameManager {
 
         resume.onClick(() -> {
             cfScreen.closeWindow();
-            resumeTimer();
+            resumeTimer(); 
+        });
+
+        home.onClick(() -> {
+            cfScreen.closeWindow();
+            canvas.removeAll();
+            canvas.closeWindow();
+            cancelTimer();
+            setRemainingTime(initialTime); 
+            isPaused = false;
+            StartMenu.displayStartMenu(this);
+        });
+
+    }
+
+    /**
+     * Generate a pop up screen with 1 button to confirm whether user wants to return to Home Screen after a game ends
+     */
+    private void promptUserForReturnHome_GameOver_Confirmation(){
+        CanvasWindow cfScreen = new CanvasWindow("DO YOU WANT TO GO TO HOME SCREEN?", canvas.getWidth() / 3, canvas.getHeight() / 12);
+
+        
+        Button resume = new Button("RETRY GAME");
+        cfScreen.add(resume);
+        resume.setCenter(cfScreen.getWidth() * 0.3, cfScreen.getHeight() * 0.6);
+
+        Button home = new Button("HOME SCREEN");
+        cfScreen.add(home);
+        home.setCenter(cfScreen.getWidth() * 0.7, cfScreen.getHeight() * 0.6);
+
+        resume.onClick(() -> {
+            cfScreen.closeWindow();
+            restartCurrentGame();
         });
 
         home.onClick(() -> {
