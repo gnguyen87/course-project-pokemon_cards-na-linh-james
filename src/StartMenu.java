@@ -11,7 +11,7 @@ public class StartMenu {
 
         // Title
         GraphicsText titleText = new GraphicsText("Pokemon Card Game");
-        titleText.setFontSize(menuCanvas.getHeight() / 20); // Adjust the font size proportionally
+        titleText.setFontSize(menuCanvas.getHeight() / 14); // Adjust the font size proportionally
         titleText.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() / 4);
         menuCanvas.add(titleText);
 
@@ -38,6 +38,18 @@ public class StartMenu {
         difficult.setFontSize(menuCanvas.getHeight() / 30); // Adjust the font size proportionally
         difficult.setCenter(menuCanvas.getWidth() / 2, menuCanvas.getHeight() / 4 + 370);
         menuCanvas.add(difficult);
+
+        Pokemon pokemon1 = new Pokemon("pokemon_images/wooper.png");
+        pokemon1.setMaxHeight(350);
+        pokemon1.setMaxWidth(350);
+        pokemon1.setCenter(menuCanvas.getWidth()*0.2, menuCanvas.getHeight()/1.8);
+        menuCanvas.add(pokemon1);
+
+        Pokemon pokemon2 = new Pokemon("pokemon_images/squirtle.png");
+        pokemon2.setMaxHeight(350);
+        pokemon2.setMaxWidth(350);
+        pokemon2.setCenter(menuCanvas.getWidth()*0.8, menuCanvas.getHeight()/1.8);
+        menuCanvas.add(pokemon2);
 
 
         // Buttons
