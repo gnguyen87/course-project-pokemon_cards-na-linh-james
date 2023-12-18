@@ -99,13 +99,16 @@ public class GameManager {
 
         canvas.onClick(event -> pauseGame(event.getPosition()));
 
-        homeButton = new Image("buttons/home_button.png");
-        homeButton.setMaxHeight(130);
-        homeButton.setMaxWidth(130);
-        homeButton.setCenter(canvas.getWidth() - 120, canvas.getHeight() - 300);
-        canvas.add(homeButton);
+        // This button, when activated while in the middle the game would cause a bug: If the user goes to the main menu in the middle 
+        // of playing a level, chooses the same level, and wins---the game would not end. 
+
+        // homeButton = new Image("buttons/home_button.png");
+        // homeButton.setMaxHeight(130);
+        // homeButton.setMaxWidth(130);
+        // homeButton.setCenter(canvas.getWidth() - 120, canvas.getHeight() - 300);
+        // canvas.add(homeButton);
         
-        canvas.onClick(event -> returnHome(event.getPosition()));
+        // canvas.onClick(event -> returnHome(event.getPosition()));
 
         homeButton_gameOver = new Image("buttons/home_button.png");
         homeButton_gameOver.setMaxHeight(100);
@@ -113,6 +116,8 @@ public class GameManager {
         homeButton_gameOver.setCenter(canvas.getWidth() - 120, canvas.getHeight() - 250);
         
         canvas.onClick(event -> returnHome_gameOver(event.getPosition()));
+
+    
     }
 
     /**
