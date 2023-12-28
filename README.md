@@ -1,26 +1,42 @@
 # Pokemon Card Game
 
 
-Pokemon Card Game is a multi-level memory card game developed in Java with [kilt-graphics API](<https://mac-comp127.github.io/kilt-graphics/>) to enhance concentration and critical thinking skills in 5-8 youth. It was developed by: 
-James Hernandez, Linh Nguyen, Na Nguyen
+Pokemon Card Game is a multi-level memory card game developed in Java with [kilt-graphics API](<https://mac-comp127.github.io/kilt-graphics/>) to enhance concentration and critical thinking skills in 5-8 youth. It was developed by: Na Nguyen, Linh Nguyen, and James Hernandez
 
-<img width="888" alt="Screenshot 2023-12-10 at 5 05 32 PM" src="https://github.com/Mac-COMP-127-Fall-2023/course-project-pokemon_cards-na-linh-james/assets/134335069/639800cc-11f8-4d18-837a-f673b2d543c0">
-<img width="888" alt="Screenshot 2023-12-10 at 4 59 06 PM" src="https://github.com/Mac-COMP-127-Fall-2023/course-project-pokemon_cards-na-linh-james/assets/134335069/ee0072e4-d26a-4eee-a908-fbb74e3874e0">
-<img width="888" alt="Screenshot 2023-12-10 at 5 05 42 PM" src="https://github.com/Mac-COMP-127-Fall-2023/course-project-pokemon_cards-na-linh-james/assets/134335069/2a9f9a88-50e5-4482-826b-0f9e973d1a6d">
+<img width="1050" alt="Screenshot 2023-12-27 at 8 06 46 PM" src="https://github.com/gnguyen87/course-project-pokemon_cards-na-linh-james/assets/134335069/320e49de-04db-4410-8ae1-6009cb9e074d">
+<img width="1043" alt="Screenshot 2023-12-27 at 8 07 18 PM" src="https://github.com/gnguyen87/course-project-pokemon_cards-na-linh-james/assets/134335069/7d6ee6a8-8cf6-4a86-be54-b4c96028ea87">
+<img width="1056" alt="Screenshot 2023-12-27 at 8 07 48 PM" src="https://github.com/gnguyen87/course-project-pokemon_cards-na-linh-james/assets/134335069/011bc706-6826-4c14-ab2a-1e3626ea6e1e">
+<img width="1064" alt="Screenshot 2023-12-27 at 8 08 39 PM" src="https://github.com/gnguyen87/course-project-pokemon_cards-na-linh-james/assets/134335069/8d3ae2fc-ebaf-4de0-99d4-83d402b8643b">
 
 The game has 3 levels of difficulty: easy (5 pairs, 10 attempts), medium (10 pairs, 20 attempts), and difficult (15 pairs, 30 attempts). The game begins with all cards flipped upside down. Upon clicking one of the cards, it flips face-side-up to reveal the pokemon it pertains to. The goal of the each round is to find the matching card, with 15 total pairs, for the card flipped. Upon the second card being clicked, if it is not a correct match, the cards will flip back over to hide the pokemon. However, if they match, the two cards will be removed from the screen. The goal of the game is to remove all pairs before the given time and under the limited number of attempts.
 
 
-## UML Diagram
-Below is a UML Diagram of our classes, their variables, methods, and their relationships.
 
-<img width="700" alt="Screenshot 2023-12-10 at 5 15 27 PM" src="https://github.com/Mac-COMP-127-Fall-2023/course-project-pokemon_cards-na-linh-james/assets/134335069/4f6b2074-5336-4c13-91cf-4d637232feab">
+## Class Breakdown
+Below is the breakdown of our classes.
+
+<img width="956" alt="Screenshot 2023-12-27 at 8 11 51 PM" src="https://github.com/gnguyen87/course-project-pokemon_cards-na-linh-james/assets/134335069/0a0a25cf-28f0-4ba3-a832-59f833b3a303">
 
 
 ## Game UI features
 Use [kilt-graphics API](<https://mac-comp127.github.io/kilt-graphics/>) to generate a grid whose size is dependent on the difficulty setting, holding a level-determined pairs of pokemon graphics cards. The position of all 30 graphics images are randomly generated. 
 
+## API 
 
+### Start Menu
+The game begins with the player being sent to a StartMenu where difficulty levels will be chosen with buttons. These levels will determine the number of cards/ pairs, as well as the number of permitted attempts and the time limit. 
+
+### Gameplay 
+Once chosen, the canvas will be replaced with the card grid, where the player must match all the cards in the alloted time and number of attempts. 
+
+### Buttons
+Three buttons will also appear on this screen. The pause button allows for the user to stop the game without affecting the timer and attempts, the start over button will allow for the canvas to be reset with those current difficulty level conditions, and the home button will send the user to the start menu. 
+
+### Endgame
+
+Assuming none of the buttons are clicked, the game ends depending on two different scenarios- win or lose. The player wins when all pairs are matched under the existing limits and no cards exist on the screen. If this happens, a victory image will appear. The player loses when the timer runs out or attempts limit is reached while cards still exist on the screen. In this case, a lose image will appear.
+
+In both scenarios, a button will appear that, when clicked, will prompt two options: to retry the game with the same difficulty conditions or to be sent back to the home screen to choose a new difficulty. 
 
 ## Technical Guide: 
 The technical requirements of this game are minimal, only having Java 17 installed. To play the program, users should refer to the PokemonCardGame class and run the main method.
@@ -49,8 +65,7 @@ Using kilt.graphics as the basis for its GUI, Pokemon Memory Game has certain li
 
 ## Societal Impact:
 Pokemon Memory Game relies entirely on mouse clicks for user input and screen navigation. This creates barriers for those who rely on keyboards and switches to access computers and other digital devices. 
-Furthermore, taking into consideration the different colors of pokemon characters against the card background, Pokemon Memory Card does not comply with the AAA color contrast guide which imposes strain on those with low vision and color blindness. 
-
+Furthermore, taking into consideration the different colors of pokemon characters against the card background, Pokemon Memory Card does not comply with the AAA color contrast guide which imposes strain on those with low vision and color blindness.
 
 
 
